@@ -1,0 +1,16 @@
+@import './portfolio.css';
+/* ref-ui.css is imported from main.tsx so Vite resolves the path (postcss-import was resolving this @import to the repo root). */
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+#root {
+  min-height: 100%;
+}
