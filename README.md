@@ -1,73 +1,104 @@
-# React + TypeScript + Vite
+# Mohit Kuril — IDE portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Single-page portfolio that **looks and behaves like VS Code**: file explorer, editor tabs, breadcrumbs, status bar, command palette, optional bottom panel (terminal), and a Copilot-style side panel.
 
-Currently, two official plugins are available:
+**Live site:** [https://mohitkuril.xyz/](https://mohitkuril.xyz/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## How the app is wired
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+| Piece | Role |
+|--------|------|
+| `App.tsx` | Renders `IdeApp` only. |
+| `IdeApp.tsx` | **Main shell**: tab state, explorer, theme, command palette, Copilot, bottom panel, Lenis scroll on the editor pane, mobile vs desktop layout. |
+| `files.ts` | **Explorer / tab labels** — each “file” (`home.tsx`, `README.md`, …) maps to a `FileTab` id. Add or rename entries here when you add views. |
+| `EditorViews.tsx` | **One component per “file”** — switches on the active tab and renders `HomeView`, `ReadmeView`, `ProjectsView`, etc. |
+| `siteConfig.ts` | **All copy and structured data** (projects, skills, readme text, links, Copilot strings). Prefer editing this instead of hunting through JSX. |
+| `types.ts` | Shared types (`FileTab`, file entry shapes, etc.). |
 
-## Expanding the ESLint configuration
+Flow: user picks a file in **Explorer** or **TabBar** → `openTab(id)` → `active` tab updates → **EditorViews** renders the matching page. Content comes from **siteConfig**.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## `src/components/` (by responsibility)
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+**Chrome & navigation**
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- `MenuBar.tsx` — top menu strip (File, Edit, …), palette trigger, theme zoom, fullscreen.
+- `ActivityBar.tsx` — left rail icons (explorer, search, SCM popover, Copilot).
+- `Explorer.tsx` — file tree; uses `FILE_ENTRIES` from `files.ts`.
+- `TabBar.tsx` — open editor tabs; close / select.
+- `Breadcrumbs.tsx` — path trail for the active tab.
+- `CommandPalette.tsx` — quick open / command-style navigation.
+
+**Editor area**
+
+- `EditorViews.tsx` — **all “page” views** in one module (home, about, projects, skills, experience, contact, readme). Styling mostly via `ref-ui.css` classes (e.g. `.page--readme`).
+
+**Side & bottom panels**
+
+- `CopilotPanel.tsx` — right-side assistant copy (driven by `siteConfig.copilot`).
+- `SourceControlPopover.tsx` — SCM-style popover (e.g. resume download).
+- `BottomPanel.tsx` — terminal / problems / output tabs wrapper.
+- `PortfolioTerminal.tsx` — fake terminal UI inside the bottom panel.
+
+**System UI**
+
+- `StatusBar.tsx` — bottom status line (branch, tab hint, theme on mobile).
+- `ThemePicker.tsx` — color theme selection; works with `lib/themes.ts` + `themes.css`.
+- `MobileTopChrome.tsx` — compact top bar on small screens.
+
+**Visuals & icons**
+
+- `ThreeBackdrop.tsx` — optional Three.js background (disabled on mobile / reduced motion).
+- `Icons.tsx` / `FileTypeIcon.tsx` / `CopilotMascot.tsx` — small presentational pieces.
+
+---
+
+## `src/hooks/` & `src/lib/`
+
+| Path | Role |
+|------|------|
+| `hooks/useLenisOnElement.ts` | Smooth scrolling on the editor scroll container. |
+| `hooks/useMediaQuery.ts` | Breakpoints (e.g. mobile layout under 900px width). |
+| `hooks/usePortfolioMotion.ts` | Ties motion / AOS-style behavior to the active tab. |
+| `lib/themes.ts` | Theme ids, labels, `localStorage` persistence. |
+| `lib/motion.ts` | Small helpers for animation attributes. |
+
+---
+
+## Styles
+
+| File | Role |
+|------|------|
+| `index.css` | Global resets, `#root` height, scrollbar hiding; imports `portfolio.css`. |
+| `portfolio.css` | IDE **layout**: flex shell, explorer width, editor stack, breadcrumbs. |
+| `ref-ui.css` | **Component look**: menu bar, pages, readme, forms, status bar, Copilot, etc. |
+| `themes.css` | Variables per `data-app-theme` on `<html>`. |
+
+`main.tsx` loads `index.css`, `ref-ui.css`, and `themes.css`.
+
+---
+
+## `public/` & SEO
+
+Static assets and crawlers: `favicon.svg`, `og-card.svg`, `robots.txt`, `sitemap.xml` (sitemap uses **https://mohitkuril.xyz/**). Resume PDF and any extra assets live here too.
+
+---
+
+## Scripts
+
+```bash
+npm install
+npm run dev       # Vite dev server
+npm run build     # Typecheck + production build → dist/
+npm run preview   # Serve dist/ locally
+npm run lint
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Deploy
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Output is **static** in `dist/`. After `npm run build`, upload that folder (or point CI at it). Canonical URL in metadata: **https://mohitkuril.xyz/** (`index.html`, `sitemap.xml`).
