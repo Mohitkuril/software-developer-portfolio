@@ -5,12 +5,16 @@ import { siteConfig } from '../siteConfig'
 import type { FileTab } from '../types'
 import { CopilotMascot } from './CopilotMascot'
 
-type Msg = { id: string; role: 'user' | 'assistant'; text: string }
+type Msg = { id: string; role: 'user' | 'assistant'; text: string; at: number }
+
+function formatMsgTime(ts: number) {
+  return new Date(ts).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })
+}
 
 function replyFor(text: string, tab: FileTab): string {
   const t = text.toLowerCase()
   if (t.includes('stack') || t.includes('tech')) {
-    return 'I lean on React, TypeScript, and modern CSS architecture — open skills.json for the full breakdown with proficiency bars.'
+    return 'Mohit leans on React.js, Next.js, TypeScript, Tailwind, Redux, and Mantine — open skills.json for bars and familiar-with tags.'
   }
   if (t.includes('contact') || t.includes('reach')) {
     return 'Best path is the Contact tab (contact.css) — email and socials are listed there. You can also use the form; it posts to Formspree when configured.'
@@ -32,7 +36,7 @@ function replyFor(text: string, tab: FileTab): string {
 
 type Props = {
   activeTab: FileTab
-  onClose?: () => void
+  onClose: () => void
 }
 
 export function CopilotPanel({ activeTab, onClose }: Props) {
@@ -43,18 +47,29 @@ export function CopilotPanel({ activeTab, onClose }: Props) {
 
   const pushExchange = useCallback(
     (userText: string) => {
-      const uid = `u-${Date.now()}`
-      const aid = `a-${Date.now()}`
-      setMessages((m) => [...m, { id: uid, role: 'user', text: userText }])
+      const now = Date.now()
+      const uid = `u-${now}`
+      setMessages((m) => [...m, { id: uid, role: 'user', text: userText, at: now }])
       window.setTimeout(() => {
         setMessages((m) => [
           ...m,
-          { id: aid, role: 'assistant', text: replyFor(userText, activeTab) },
+          {
+            id: `a-${Date.now()}`,
+            role: 'assistant',
+            text: replyFor(userText, activeTab),
+            at: Date.now(),
+          },
         ])
       }, 420)
     },
     [activeTab],
   )
+
+  const startNewChat = useCallback(() => {
+    setMessages([])
+    setDraft('')
+    listRef.current?.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [])
 
   useEffect(() => {
     listRef.current?.scrollTo({ top: listRef.current.scrollHeight, behavior: 'smooth' })
@@ -78,18 +93,18 @@ export function CopilotPanel({ activeTab, onClose }: Props) {
           <span className="copilot2__header-title">{copilot.panelTitle}</span>
         </div>
         <div className="copilot2__header-actions">
-          <button type="button" className="copilot2__icon-btn" aria-label="Edit" title="Edit">
+          <button
+            type="button"
+            className="copilot2__icon-btn"
+            aria-label="Start new chat"
+            title="New chat"
+            onClick={startNewChat}
+          >
             <VscEdit size={16} />
           </button>
-          {onClose ? (
-            <button type="button" className="copilot2__icon-btn" onClick={onClose} aria-label="Close panel">
-              <VscChromeClose size={16} />
-            </button>
-          ) : (
-            <button type="button" className="copilot2__icon-btn" aria-label="Close" title="Close" disabled>
-              <VscChromeClose size={16} />
-            </button>
-          )}
+          <button type="button" className="copilot2__icon-btn" onClick={onClose} aria-label="Close panel" title="Close">
+            <VscChromeClose size={16} />
+          </button>
         </div>
       </header>
 
@@ -101,16 +116,23 @@ export function CopilotPanel({ activeTab, onClose }: Props) {
         </span>
       </div>
 
-      <div className="copilot2__scroll" ref={listRef}>
+      <div className="copilot2__intro">
         <div className="copilot2__hero">
           <CopilotMascot size={56} className="copilot2__hero-mascot" />
           <h2 className="copilot2__hero-title">{copilot.greeting}</h2>
           <p className="copilot2__hero-intro">{copilot.intro}</p>
         </div>
+      </div>
 
+      <div className="copilot2__scroll" ref={listRef}>
         {messages.map((m) => (
           <div key={m.id} className={`copilot2__msg copilot2__msg--${m.role}`}>
-            {m.text}
+            <div className="copilot2__msg-body">
+              <p className="copilot2__msg-text">{m.text}</p>
+              <time className="copilot2__msg-time" dateTime={new Date(m.at).toISOString()}>
+                {formatMsgTime(m.at)}
+              </time>
+            </div>
           </div>
         ))}
       </div>

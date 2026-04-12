@@ -1,12 +1,5 @@
-import {
-  VscAccount,
-  VscComment,
-  VscDebugAlt,
-  VscExtensions,
-  VscFiles,
-  VscSearch,
-  VscSourceControl,
-} from 'react-icons/vsc'
+import type { RefObject } from 'react'
+import { VscCloudDownload, VscFiles, VscSearch, VscSourceControl, VscSparkle } from 'react-icons/vsc'
 
 type Props = {
   explorerOpen: boolean
@@ -15,6 +8,10 @@ type Props = {
   copilotOpen: boolean
   onToggleCopilot: () => void
   showCopilotToggle: boolean
+  scmPopoverOpen: boolean
+  onToggleScmPopover: () => void
+  scmAnchorRef: RefObject<HTMLButtonElement | null>
+  onDownloadResume: () => void
 }
 
 export function ActivityBar({
@@ -24,6 +21,10 @@ export function ActivityBar({
   copilotOpen,
   onToggleCopilot,
   showCopilotToggle,
+  scmPopoverOpen,
+  onToggleScmPopover,
+  scmAnchorRef,
+  onDownloadResume,
 }: Props) {
   return (
     <nav className="activity" aria-label="Primary">
@@ -39,30 +40,32 @@ export function ActivityBar({
       <button type="button" className="activity__btn" onClick={onOpenPalette} title="Search (Ctrl+P)">
         <VscSearch size={22} />
       </button>
-      <button type="button" className="activity__btn activity__btn--quiet" title="Source Control" disabled>
+      <button
+        ref={scmAnchorRef}
+        type="button"
+        className={`activity__btn${scmPopoverOpen ? ' is-active' : ''}`}
+        onClick={onToggleScmPopover}
+        title="Source Control"
+        aria-expanded={scmPopoverOpen}
+        aria-haspopup="dialog"
+      >
         <VscSourceControl size={22} />
       </button>
-      <button type="button" className="activity__btn activity__btn--quiet" title="Run and Debug" disabled>
-        <VscDebugAlt size={22} />
+      <button type="button" className="activity__btn" onClick={onDownloadResume} title="Download resume (PDF)">
+        <VscCloudDownload size={22} />
       </button>
-      <button type="button" className="activity__btn activity__btn--quiet" title="Extensions" disabled>
-        <VscExtensions size={22} />
-      </button>
-      <div className="activity__spacer" />
-      {showCopilotToggle && (
+      {showCopilotToggle ? (
         <button
           type="button"
           className={`activity__btn${copilotOpen ? ' is-active' : ''}`}
           onClick={onToggleCopilot}
-          title="Chat"
+          title="Copilot (Chat)"
           aria-pressed={copilotOpen}
         >
-          <VscComment size={22} />
+          <VscSparkle size={22} />
         </button>
-      )}
-      <button type="button" className="activity__btn activity__btn--quiet" title="Accounts" disabled>
-        <VscAccount size={22} />
-      </button>
+      ) : null}
+      <div className="activity__spacer" aria-hidden="true" />
     </nav>
   )
 }

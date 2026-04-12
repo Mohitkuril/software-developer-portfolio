@@ -1,5 +1,6 @@
 /* VS Code–inspired dark theme for IDE portfolio */
 :root {
+  --mobile-chrome-h: 46px;
   --bg: #1e1e1e;
   --bg-elevated: #252526;
   --bg-hover: #2a2d2e;
@@ -36,18 +37,25 @@
 }
 
 .ide {
-  min-height: 100vh;
-  min-height: 100dvh;
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  height: 100%;
+  max-height: 100%;
+  max-height: 100dvh;
   display: flex;
   flex-direction: column;
   background: var(--bg);
   color: var(--text);
+  overflow: hidden;
 }
 
 .ide__body {
   flex: 1;
   display: flex;
   min-height: 0;
+  overflow: hidden;
+  max-height: 100%;
 }
 
 .ide__explorer-desktop {
@@ -62,17 +70,193 @@
   display: flex;
   flex-direction: column;
   min-width: 0;
+  min-height: 0;
   background: var(--tab-active);
+}
+
+/* Editor + optional bottom panel stack (desktop) */
+.ide__editor-stack {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 0;
+}
+
+/* —— Bottom panel (Terminal / Problems / Output) —— */
+.bottom-panel {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  height: min(220px, 34vh);
+  min-height: 140px;
+  border-top: 1px solid var(--bottom-panel-border, var(--border));
+  background: var(--bottom-panel-bg, var(--bg-elevated));
+  font-family: var(--mono, ui-monospace, Consolas, monospace);
+  font-size: 12px;
+}
+
+.bottom-panel__tabs {
+  display: flex;
+  align-items: stretch;
+  flex-shrink: 0;
+  background: var(--bottom-panel-tab-bg, var(--tab-inactive));
+  border-bottom: 1px solid var(--bottom-panel-border, var(--border));
+}
+
+.bottom-panel__tab {
+  padding: 6px 14px;
+  border: none;
+  border-right: 1px solid var(--bottom-panel-border, var(--border));
+  background: transparent;
+  color: var(--text-dim);
+  font: inherit;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+}
+
+.bottom-panel__tab:hover {
+  color: var(--text);
+}
+
+.bottom-panel__tab.is-active {
+  background: var(--bottom-panel-bg, var(--bg));
+  color: var(--text-bright);
+}
+
+.bottom-panel__body {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 10px 12px;
+  color: var(--text);
+}
+
+.bottom-panel__body--terminal {
+  padding: 0;
+  overflow: hidden;
+}
+
+.bottom-panel__terminal--interactive {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+  padding: 10px 12px 12px;
+  font-family: var(--mono, ui-monospace, Consolas, monospace);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.bottom-panel__terminal-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+}
+
+.bottom-panel__pre {
+  margin: 0 0 8px;
+  white-space: pre-wrap;
+  word-break: break-word;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+.bottom-panel__pre--cmd {
+  color: var(--text-bright);
+}
+
+.bottom-panel__pre--out {
+  color: var(--text);
+}
+
+.bottom-panel__pre--err {
+  color: #f85149;
+}
+
+.bottom-panel__input-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 10px;
+  margin-top: 6px;
+}
+
+.bottom-panel__prompt-block {
+  flex-shrink: 0;
+  margin-bottom: 2px;
+}
+
+.bottom-panel__prompt-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.18;
+  letter-spacing: 0.01em;
+}
+
+.bottom-panel__prompt-user {
+  font-weight: 600;
+  color: var(--terminal-prompt-user, var(--teal));
+}
+
+.bottom-panel__prompt-muted {
+  color: var(--text-dim);
+}
+
+.bottom-panel__prompt-dollar {
+  font-weight: 600;
+  color: var(--text-bright);
+}
+
+.bottom-panel__input {
+  flex: 1;
+  min-width: 140px;
+  border: none;
+  background: transparent;
+  color: var(--text-bright);
+  font: inherit;
+  outline: none;
+  caret-color: var(--statusbar-accent, var(--accent));
+}
+
+.bottom-panel__placeholder {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: var(--text-dim);
+}
+
+.bottom-panel__placeholder-title {
+  font-weight: 600;
+  color: var(--text);
+}
+
+.bottom-panel__placeholder-msg {
+  font-size: 12px;
 }
 
 .ide__copilot-desktop {
   width: min(360px, 34vw);
   flex-shrink: 0;
+  align-self: stretch;
   display: flex;
   flex-direction: column;
   border-left: 1px solid var(--border);
-  background: #1a1a1e;
+  background: var(--panel-bg);
   min-height: 0;
+  max-height: 100%;
+  overflow: hidden;
+}
+
+.ide__copilot-desktop > .copilot2 {
+  flex: 1;
+  min-height: 0;
+  height: 100%;
+  max-height: 100%;
 }
 
 .ide__editor-scroll {
@@ -96,24 +280,46 @@
 .ide__editor-content {
   position: relative;
   z-index: 1;
+  /* README column uses cqw / @container for VS Code–style centered ~half-width layout */
+  container-type: inline-size;
+  container-name: editor;
 }
 
 .ide__explorer-mobile-backdrop {
   position: fixed;
-  inset: 0;
-  z-index: 40;
+  left: 0;
+  right: 0;
+  width: 100%;
+  max-width: 100vw;
+  z-index: 100;
   background: rgba(0, 0, 0, 0.45);
 }
 
-.ide__explorer-mobile {
+.ide__explorer-mobile-backdrop .ide__explorer-mobile {
   position: absolute;
-  top: var(--menubar-h);
-  bottom: var(--statusbar-h);
+  top: 0;
+  bottom: 0;
   left: 0;
+  height: auto;
   width: min(var(--explorer-width), 88vw);
+  max-width: min(var(--explorer-width), 92vw);
   border-right: 1px solid var(--border);
   background: var(--bg-elevated);
   box-shadow: 8px 0 24px rgba(0, 0, 0, 0.35);
+}
+
+.ide--mobile .cta-row {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.ide--mobile .cta-row .cta {
+  width: auto;
+  flex: 0 0 auto;
+  min-width: 0;
 }
 
 /* Activity bar */
@@ -206,20 +412,32 @@
 .explorer__list {
   list-style: none;
   margin: 0;
-  padding: 4px 0;
+  padding: 6px 0 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.explorer__scroll--desktop {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .explorer__file {
   width: 100%;
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 6px 12px;
+  gap: 10px;
+  padding: 9px 12px;
   border: none;
   background: transparent;
   color: inherit;
   cursor: pointer;
   text-align: left;
+  font-family: ui-monospace, 'Cascadia Code', 'Segoe UI Mono', Consolas, monospace;
+  font-size: 12px;
 }
 
 .explorer__file:hover {
@@ -227,8 +445,188 @@
 }
 
 .explorer__file.is-active {
-  background: #37373d;
+  position: relative;
+  background: #2a2d3a;
   color: var(--text-bright);
+  font-weight: 600;
+  box-shadow: inset 3px 0 0 0 #007fd4;
+}
+
+/* —— Explorer: mobile drawer (VS Code–style reference) —— */
+.explorer--mobile {
+  min-height: 0;
+}
+
+.explorer__head--mobile {
+  flex-shrink: 0;
+  padding: 10px 10px 10px 12px;
+  background: #252526;
+  border-bottom: 1px solid var(--border);
+}
+
+.explorer__head-title--mobile {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: #9d9d9d;
+}
+
+.explorer__head-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.explorer__icon-btn {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  color: #c8c8c8;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.explorer__icon-btn:hover:not(:disabled) {
+  background: var(--bg-hover);
+  color: var(--text-bright);
+}
+
+.explorer__icon-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.explorer--mobile .explorer__scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 4px 0 8px;
+}
+
+.explorer__folder-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px 8px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: #cccccc;
+}
+
+.explorer__folder-icon {
+  flex-shrink: 0;
+  color: #dcb67a;
+}
+
+.explorer__folder-label {
+  min-width: 0;
+}
+
+.explorer__list--nested {
+  padding: 0 0 4px;
+}
+
+.explorer__file--nested {
+  padding-left: 22px;
+}
+
+.explorer__active-pip {
+  margin-left: auto;
+  flex-shrink: 0;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+}
+
+.explorer-copilot-bar {
+  flex-shrink: 0;
+  width: calc(100% - 16px);
+  margin: 10px 8px 8px;
+  padding: 11px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 10px;
+  border: 1px solid #5b3ead;
+  background: linear-gradient(165deg, #252036 0%, #1a1528 100%);
+  box-shadow: 0 0 0 1px rgba(124, 77, 255, 0.15);
+  font-family: inherit;
+  font-size: 12px;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  appearance: none;
+}
+
+.explorer-copilot-bar:hover {
+  border-color: #7c4dff;
+  filter: brightness(1.04);
+}
+
+.explorer-copilot-bar__spark {
+  flex-shrink: 0;
+  color: #c4b5fd;
+}
+
+.explorer-copilot-bar__text {
+  flex: 1;
+  min-width: 0;
+  color: #8b949e;
+  font-weight: 500;
+}
+
+.explorer-copilot-bar__ai {
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #6e7681;
+}
+
+.explorer__foot--mobile {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  margin-top: auto;
+  border-top: 1px solid var(--border);
+  font-size: 11px;
+  color: #8b949e;
+}
+
+.explorer__foot-sync {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: ui-monospace, 'Cascadia Code', Consolas, monospace;
+}
+
+.explorer__foot-git {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: ui-monospace, 'Cascadia Code', Consolas, monospace;
+}
+
+.explorer__git-up {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  color: #56d364;
+}
+
+.explorer__git-changes {
+  color: #e3b341;
+  font-weight: 600;
 }
 
 .explorer__name {
@@ -362,6 +760,18 @@
   color: var(--text-dim);
   cursor: pointer;
   font-size: 12px;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.12s ease,
+    color 0.12s ease,
+    background 0.12s ease;
+}
+
+.tabbar__tab:hover .tabbar__close-btn,
+.tabbar__tab:focus-within .tabbar__close-btn {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .tabbar__close-btn:hover {
@@ -570,8 +980,9 @@
   inset: 0;
   z-index: 60;
   display: flex;
-  justify-content: center;
-  padding-top: 12vh;
+  flex-direction: column;
+  align-items: center;
+  padding-top: max(48px, 10vh);
   background: rgba(0, 0, 0, 0.45);
 }
 

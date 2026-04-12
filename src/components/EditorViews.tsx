@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { FormEvent } from 'react'
 import { FaEnvelope, FaGithub, FaLinkedin, FaXTwitter } from 'react-icons/fa6'
-import { VscLinkExternal } from 'react-icons/vsc'
+import { VscCloudDownload, VscLinkExternal } from 'react-icons/vsc'
 import { aos } from '../lib/motion'
+import { triggerResumeDownload } from '../resumeDownload'
 import { siteConfig } from '../siteConfig'
 import type { FileTab } from '../types'
 
@@ -91,13 +92,15 @@ function HomeView({ onOpenTab }: { onOpenTab: (id: FileTab) => void }) {
           ✉ Contact
         </button>
       </div>
-      <div className="stat-row" {...aos('fade-up', { delay: 340 })}>
-        {c.homeStats.map((s) => (
-          <div key={s.label} className={`stat-cell${'wide' in s && s.wide ? ' stat-cell--wide' : ''}`}>
-            <div className="stat-cell__value">{s.value}</div>
-            <div className="stat-cell__label">{s.label}</div>
-          </div>
-        ))}
+      <div className="stat-row-bleed" {...aos('fade-up', { delay: 340 })}>
+        <div className="stat-row">
+          {c.homeStats.map((s) => (
+            <div key={s.label} className={`stat-cell${'wide' in s && s.wide ? ' stat-cell--wide' : ''}`}>
+              <div className="stat-cell__value">{s.value}</div>
+              <div className="stat-cell__label">{s.label}</div>
+            </div>
+          ))}
+        </div>
       </div>
       <div className="social-row" aria-label="Social links" {...aos('fade-up', { delay: 400 })}>
         {c.socialLinks.map((s) => (
@@ -182,7 +185,12 @@ function ProjectsView() {
       </p>
       <ul className="project-grid-ref">
         {c.projects.map((p, i) => (
-          <li key={p.name} className="project-card-ref" {...aos('zoom-in', { delay: i * 75, duration: 640 })}>
+          <li
+            key={p.name}
+            className="project-card-ref"
+            style={{ '--project-accent': p.accent } as React.CSSProperties}
+            {...aos('zoom-in', { delay: i * 75, duration: 640 })}
+          >
             <div className="project-card-ref__top">
               <span className="project-card-ref__emoji" aria-hidden>
                 {p.emoji}
@@ -190,7 +198,12 @@ function ProjectsView() {
               <span className="project-card-ref__cat">{p.category}</span>
               <span className="project-card-ref__links">
                 {p.liveUrl ? (
-                  <a className="project-card-ref__link" href={p.liveUrl} target="_blank" rel="noreferrer">
+                  <a
+                    className="project-card-ref__link project-card-ref__link--live"
+                    href={p.liveUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
                     Live <VscLinkExternal />
                   </a>
                 ) : null}
@@ -203,6 +216,11 @@ function ProjectsView() {
             </div>
             <h2 className="project-card-ref__title">{p.name}</h2>
             <p className="project-card-ref__desc">{p.description}</p>
+            <ul className="project-card-ref__highlights">
+              {p.highlights.map((line) => (
+                <li key={line}>{line}</li>
+              ))}
+            </ul>
             <div className="project-card-ref__tags">
               {p.tech.map((t) => (
                 <span key={t} className="tech-pill">
@@ -217,32 +235,64 @@ function ProjectsView() {
   )
 }
 
+function AnimatedSkillBar({ pct, color }: { pct: number; color: string }) {
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    el.style.width = '0%'
+    const id = window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => {
+        el.style.width = `${pct}%`
+      })
+    })
+    return () => cancelAnimationFrame(id)
+  }, [pct])
+
+  return (
+    <div className="skill-row__bar-wrap skill-row__bar-wrap--neon">
+      <div
+        ref={ref}
+        className="skill-row__bar skill-row__bar--animated"
+        style={{
+          width: '0%',
+          background: color,
+          transition: 'width 2.15s cubic-bezier(0.19, 1, 0.22, 1)',
+          boxShadow: `0 0 14px ${color}99, 0 0 5px ${color}`,
+        }}
+      />
+    </div>
+  )
+}
+
 function SkillsView() {
   const c = siteConfig
+
   return (
     <article className="editor-view page page--skills">
-      <h1 className="page-display-h1" {...aos('fade-up', { duration: 700 })}>
-        Skills
+      <p className="page-code-comment skills-page__comment" {...aos('fade-down', { duration: 520 })}>
+        // skills.json — frontend stack & tools I use
+      </p>
+      <h1 className="skills-page__title" {...aos('zoom-in', { duration: 720 })}>
+        skills
       </h1>
-      <p className="page-code-line page-code-line--json" {...aos('fade-up', { delay: 60 })}>
+      <p className="page-code-line page-code-line--json skills-page__subtitle" {...aos('fade-up', { delay: 60 })}>
         {c.skillsSubtitle}
       </p>
       <div className="skills-grid">
         {c.skillCategories.map((cat, i) => (
-          <section key={cat.title} className="skill-block" {...aos('fade-up', { delay: i * 90 })}>
-            <h2 className="skill-block__title">{cat.title}</h2>
+          <section key={cat.title} className="skill-block" {...aos('fade-up', { delay: i * 70 })}>
+            <h2 className="skill-block__title skill-block__title--radium">{cat.title}</h2>
             <ul className="skill-block__list">
               {cat.items.map((item) => (
-                <li key={item.name} className="skill-row">
-                  <span className="skill-row__name">{item.name}</span>
-                  <div className="skill-row__bar-wrap">
-                    <div
-                      className="skill-row__bar"
-                      style={{ width: `${item.pct}%`, background: item.color }}
-                    />
-                  </div>
-                  <span className="skill-row__pct">{item.pct}%</span>
-                </li>
+                  <li key={`${cat.title}-${item.name}`} className="skill-row skill-row--radium">
+                    <span className="skill-row__name">{item.name}</span>
+                    <AnimatedSkillBar pct={item.pct} color={item.color} />
+                    <span className="skill-row__pct" style={{ color: item.color }}>
+                      {item.pct}%
+                    </span>
+                  </li>
               ))}
             </ul>
           </section>
@@ -282,7 +332,7 @@ function ExperienceView() {
             <div className="timeline__content">
               <div className="timeline__period">{job.period}</div>
               <h2 className="timeline__title">{job.title}</h2>
-              <div className="timeline__company">@ {job.company}</div>
+              <div className="timeline__company">{`@ ${job.company}`}</div>
               <p className="timeline__desc">{job.description}</p>
               <div className="timeline__tags">
                 {job.tags.map((t) => (
@@ -375,44 +425,71 @@ function ContactView() {
   )
 }
 
+function readmeEmphasis(text: string) {
+  const parts = text.split(/\*\*/)
+  return parts.map((part, i) =>
+    i % 2 === 1 ? (
+      <strong key={i}>{part}</strong>
+    ) : (
+      <span key={i}>{part}</span>
+    ),
+  )
+}
+
 function ReadmeView() {
   const r = siteConfig.readme
   return (
     <article className="editor-view page page--readme">
-      <h1 className="readme-hero-name" {...aos('fade-up', { duration: 760 })}>
-        {r.headline}
-      </h1>
-      <p className="readme-sub" {...aos('fade-up', { delay: 70 })}>
-        {r.subline}
-      </p>
-      <div className="readme-badges" {...aos('fade-up', { delay: 120 })}>
-        {r.badgeStack.map((b) => (
-          <span key={b} className="readme-badge">
-            {b}
-          </span>
-        ))}
-      </div>
+      <header className="readme-hero">
+        <h1 className="readme-hero-name" {...aos('fade-up', { duration: 760 })}>
+          {r.headline}
+        </h1>
+        <div className="readme-hero-divider readme-hero-divider--under-name" aria-hidden />
+        <p className="readme-sub" {...aos('fade-up', { delay: 70 })}>
+          {r.subline}
+        </p>
+        <div className="readme-hero-actions" {...aos('fade-up', { delay: 120 })}>
+          <div className="readme-badges">
+            {r.badgeStack.map((b) => (
+              <span key={b.label} className={`readme-badge readme-badge--${b.accent}`}>
+                {b.label}
+              </span>
+            ))}
+          </div>
+          {r.showResumeButton ? (
+            <button type="button" className="readme-resume-btn" onClick={() => triggerResumeDownload()}>
+              <VscCloudDownload size={15} className="readme-resume-btn__icon" aria-hidden />
+              <span>Resume</span>
+            </button>
+          ) : null}
+        </div>
+      </header>
+
       <h2 className="readme-h2" {...aos('fade-left', { delay: 40 })}>
         {r.aboutTitle}
       </h2>
-      <div className="readme-two-col" {...aos('fade-up', { delay: 100 })}>
-        {r.aboutColumns.map((col) => (
-          <p key={col.slice(0, 20)} className="readme-p">
-            {col}
+      <div className="readme-about" {...aos('fade-up', { delay: 100 })}>
+        {r.aboutParagraphs.map((para) => (
+          <p key={para.slice(0, 48)} className="readme-p readme-p--about">
+            {readmeEmphasis(para)}
           </p>
         ))}
+        <ul className="readme-highlights">
+          {r.highlights.map((h) => (
+            <li key={h.text} className="readme-highlight">
+              <span className="readme-highlight__icon" aria-hidden>
+                {h.icon}
+              </span>
+              <span className="readme-highlight__text">{readmeEmphasis(h.text)}</span>
+            </li>
+          ))}
+        </ul>
       </div>
-      <ul className="readme-highlights" {...aos('fade-up', { delay: 80 })}>
-        {r.highlights.map((h) => (
-          <li key={h.text} className="readme-highlight">
-            <span aria-hidden>{h.icon}</span> {h.text}
-          </li>
-        ))}
-      </ul>
+
       <h2 className="readme-h2" {...aos('fade-left', { delay: 40 })}>
         {r.stackTitle}
       </h2>
-      <div className="readme-stack" {...aos('fade-up', { delay: 90 })}>
+      <div className="readme-stack readme-stack--panel" {...aos('fade-up', { delay: 90 })}>
         {r.stackGroups.map((g) => (
           <div key={g.title} className="readme-stack-group">
             <div className="readme-stack-title">{g.title}</div>
@@ -432,9 +509,20 @@ function ReadmeView() {
       <ul className="readme-connect" {...aos('fade-up', { delay: 80 })}>
         {r.connectLines.map((line) => (
           <li key={line.label}>
-            <a href={line.href} className="readme-connect-link" target="_blank" rel="noreferrer">
-              <span className="readme-connect-label">{line.label}</span>
-              <span className="readme-connect-val">{line.value}</span>
+            <a
+              href={line.href}
+              className="readme-connect-link"
+              {...(line.href.startsWith('mailto:')
+                ? { rel: 'noopener noreferrer' }
+                : { target: '_blank', rel: 'noopener noreferrer' })}
+            >
+              <span className="readme-connect-label">{line.label}:</span>
+              <span className="readme-connect-link__value">
+                <span className="readme-connect-val">{line.value}</span>
+                {!line.href.startsWith('mailto:') ? (
+                  <VscLinkExternal className="readme-connect-link__ext" size={13} aria-hidden />
+                ) : null}
+              </span>
             </a>
           </li>
         ))}

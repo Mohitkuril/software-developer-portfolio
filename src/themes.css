@@ -1,0 +1,282 @@
+/**
+ * Global IDE look — variables live on `html` so portaled overlays inherit the same palette.
+ * Default palette matches :root / ref-ui; each [data-app-theme] overrides the set.
+ */
+
+html[data-app-theme='mohit-dark'],
+html:not([data-app-theme]) {
+  --shell-bg: #0d1117;
+  --panel-bg: #161b22;
+  --panel2: #21262d;
+  --pink: #ff4baf;
+  --teal: #2dd4bf;
+  --blue: #58a6ff;
+  --bg: #1e1e1e;
+  --bg-elevated: #252526;
+  --bg-hover: #2a2d2e;
+  --border: #3c3c3c;
+  --tab-inactive: #2d2d2d;
+  --tab-active: #1e1e1e;
+  --accent: #007fd4;
+  --accent-soft: #264f78;
+  --text: #cccccc;
+  --text-dim: #858585;
+  --text-bright: #ffffff;
+  --menubar-bg: #303031;
+  --statusbar-bg: #181818;
+  --statusbar-fg: #cccccc;
+  --statusbar-accent: #58a6ff;
+  --statusbar-mobile-bg: #0078d4;
+  --statusbar-mobile-fg: #ffffff;
+  --bottom-panel-bg: #181818;
+  --bottom-panel-tab-bg: #252526;
+  --bottom-panel-border: #2b2b2b;
+  --terminal-prompt: #79c0ff;
+  --statusbar-border: #3c3c3c;
+  --statusbar-hover-bg: rgba(255, 255, 255, 0.08);
+  --statusbar-heart: #f472b6;
+  --statusbar-mobile-heart: #fef9c3;
+}
+
+html[data-app-theme='gruvbox'] {
+  --shell-bg: #282828;
+  --panel-bg: #3c3836;
+  --panel2: #504945;
+  --pink: #fb4934;
+  --teal: #8ec07c;
+  --blue: #83a598;
+  --bg: #282828;
+  --bg-elevated: #32302f;
+  --bg-hover: #504945;
+  --border: #665c54;
+  --tab-inactive: #3c3836;
+  --tab-active: #282828;
+  --accent: #fe8019;
+  --accent-soft: #665c54;
+  --text: #ebdbb2;
+  --text-dim: #a89984;
+  --text-bright: #fbf1c7;
+  --menubar-bg: #3c3836;
+  --statusbar-bg: #1d2021;
+  --statusbar-fg: #ebdbb2;
+  --statusbar-accent: #fabd2f;
+  --statusbar-mobile-bg: #fabd2f;
+  --statusbar-mobile-fg: #1d2021;
+  --bottom-panel-bg: #1d2021;
+  --bottom-panel-tab-bg: #3c3836;
+  --bottom-panel-border: #504945;
+  --terminal-prompt: #83a598;
+  --statusbar-border: #504945;
+  --statusbar-hover-bg: rgba(251, 241, 199, 0.08);
+  --statusbar-heart: #fb4934;
+  --statusbar-mobile-heart: #3c3836;
+}
+
+html[data-app-theme='tokyo-night'] {
+  --shell-bg: #1a1b26;
+  --panel-bg: #16161e;
+  --panel2: #292e42;
+  --pink: #bb9af7;
+  --teal: #73daca;
+  --blue: #7aa2f7;
+  --bg: #1a1b26;
+  --bg-elevated: #16161e;
+  --bg-hover: #292e42;
+  --border: #3b4261;
+  --tab-inactive: #16161e;
+  --tab-active: #1a1b26;
+  --accent: #7aa2f7;
+  --accent-soft: #414868;
+  --text: #c0caf5;
+  --text-dim: #565f89;
+  --text-bright: #ffffff;
+  --menubar-bg: #16161e;
+  --statusbar-bg: #16161e;
+  --statusbar-fg: #a9b1d6;
+  --statusbar-accent: #bb9af7;
+  --statusbar-mobile-bg: #7aa2f7;
+  --statusbar-mobile-fg: #1a1b26;
+  --bottom-panel-bg: #16161e;
+  --bottom-panel-tab-bg: #1f2335;
+  --bottom-panel-border: #292e42;
+  --terminal-prompt: #7dcfff;
+  --statusbar-border: #292e42;
+  --statusbar-hover-bg: rgba(192, 202, 245, 0.08);
+  --statusbar-heart: #bb9af7;
+  --statusbar-mobile-heart: #16161e;
+}
+
+html[data-app-theme='nord'] {
+  --shell-bg: #2e3440;
+  --panel-bg: #3b4252;
+  --panel2: #434c5e;
+  --pink: #b48ead;
+  --teal: #8fbcbb;
+  --blue: #88c0d0;
+  --bg: #2e3440;
+  --bg-elevated: #3b4252;
+  --bg-hover: #434c5e;
+  --border: #4c566a;
+  --tab-inactive: #3b4252;
+  --tab-active: #2e3440;
+  --accent: #88c0d0;
+  --accent-soft: #5e81ac;
+  --text: #eceff4;
+  --text-dim: #d8dee9;
+  --text-bright: #ffffff;
+  --menubar-bg: #3b4252;
+  --statusbar-bg: #2e3440;
+  --statusbar-fg: #eceff4;
+  --statusbar-accent: #88c0d0;
+  --statusbar-mobile-bg: #5e81ac;
+  --statusbar-mobile-fg: #eceff4;
+  --bottom-panel-bg: #2e3440;
+  --bottom-panel-tab-bg: #3b4252;
+  --bottom-panel-border: #4c566a;
+  --terminal-prompt: #8fbcbb;
+  --statusbar-border: #4c566a;
+  --statusbar-hover-bg: rgba(236, 239, 244, 0.08);
+  --statusbar-heart: #b48ead;
+  --statusbar-mobile-heart: #2e3440;
+}
+
+html[data-app-theme='catppuccin'] {
+  --shell-bg: #1e1e2e;
+  --panel-bg: #181825;
+  --panel2: #313244;
+  --pink: #f5c2e7;
+  --teal: #94e2d5;
+  --blue: #89b4fa;
+  --bg: #1e1e2e;
+  --bg-elevated: #181825;
+  --bg-hover: #313244;
+  --border: #45475a;
+  --tab-inactive: #181825;
+  --tab-active: #1e1e2e;
+  --accent: #cba6f7;
+  --accent-soft: #585b70;
+  --text: #cdd6f4;
+  --text-dim: #a6adc8;
+  --text-bright: #ffffff;
+  --menubar-bg: #181825;
+  --statusbar-bg: #11111b;
+  --statusbar-fg: #cdd6f4;
+  --statusbar-accent: #cba6f7;
+  --statusbar-mobile-bg: #cba6f7;
+  --statusbar-mobile-fg: #1e1e2e;
+  --bottom-panel-bg: #11111b;
+  --bottom-panel-tab-bg: #181825;
+  --bottom-panel-border: #313244;
+  --terminal-prompt: #89dceb;
+  --statusbar-border: #313244;
+  --statusbar-hover-bg: rgba(205, 214, 244, 0.08);
+  --statusbar-heart: #f5c2e7;
+  --statusbar-mobile-heart: #1e1e2e;
+}
+
+html[data-app-theme='rose-pine'] {
+  --shell-bg: #191724;
+  --panel-bg: #1f1d2e;
+  --panel2: #26233a;
+  --pink: #eb6f92;
+  --teal: #9ccfd8;
+  --blue: #31748f;
+  --bg: #191724;
+  --bg-elevated: #1f1d2e;
+  --bg-hover: #26233a;
+  --border: #403d52;
+  --tab-inactive: #1f1d2e;
+  --tab-active: #191724;
+  --accent: #c4a7e7;
+  --accent-soft: #6e6a86;
+  --text: #e0def4;
+  --text-dim: #908caa;
+  --text-bright: #faf4ed;
+  --menubar-bg: #1f1d2e;
+  --statusbar-bg: #11111b;
+  --statusbar-fg: #e0def4;
+  --statusbar-accent: #ebbcba;
+  --statusbar-mobile-bg: #c4a7e7;
+  --statusbar-mobile-fg: #191724;
+  --bottom-panel-bg: #11111b;
+  --bottom-panel-tab-bg: #1f1d2e;
+  --bottom-panel-border: #403d52;
+  --terminal-prompt: #9ccfd8;
+  --statusbar-border: #403d52;
+  --statusbar-hover-bg: rgba(250, 244, 237, 0.07);
+  --statusbar-heart: #eb6f92;
+  --statusbar-mobile-heart: #191724;
+}
+
+/* —— Theme picker (status bar) —— */
+.theme-picker {
+  position: fixed;
+  z-index: 400;
+  right: 8px;
+  bottom: calc(var(--statusbar-h) + 6px);
+  min-width: 220px;
+  max-width: min(280px, 94vw);
+  padding: 8px 0;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--panel-bg);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
+  font-family: var(--mono, ui-monospace, monospace);
+  font-size: 12px;
+  color: var(--text);
+}
+
+.theme-picker__title {
+  padding: 0 12px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--text-dim);
+}
+
+.theme-picker__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.theme-picker__row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 12px;
+  border: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.theme-picker__row:hover {
+  background: var(--bg-hover);
+}
+
+.theme-picker__row.is-active {
+  background: var(--bg-hover);
+}
+
+.theme-picker__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+}
+
+.theme-picker__label {
+  flex: 1;
+  min-width: 0;
+}
+
+.theme-picker__check {
+  flex-shrink: 0;
+  opacity: 0.95;
+  color: var(--statusbar-accent, var(--blue));
+}
