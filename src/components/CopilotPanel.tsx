@@ -17,7 +17,7 @@ function replyFor(text: string, tab: FileTab): string {
     return 'Mohit leans on React.js, Next.js, TypeScript, Tailwind, Redux, and Mantine — open skills.json for bars and familiar-with tags.'
   }
   if (t.includes('contact') || t.includes('reach')) {
-    return 'Best path is the Contact tab (contact.css) — email and socials are listed there. You can also use the form; it posts to Formspree when configured.'
+    return 'Best path is the Contact tab (contact.css) — email and socials are listed there. You can also use the form; it posts via Web3Forms.'
   }
   if (t.includes('project') || t.includes('built')) {
     return 'Check projects.js for shipped work: each card links to live demos and GitHub where available.'

@@ -110,7 +110,7 @@ export function StatusBar({
   }
 
   return (
-    <footer className="statusbar" role="contentinfo">
+    <footer className="statusbar statusbar--mobile-radium" role="contentinfo">
       <div className="statusbar__left statusbar__left--cluster">
         <button
           type="button"

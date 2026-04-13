@@ -1193,6 +1193,17 @@
   background: var(--statusbar-hover-bg, rgba(255, 255, 255, 0.06));
 }
 
+/* When desktop also uses accent strip, keep status labels high-contrast */
+.statusbar--mobile-radium .statusbar__copilot-link,
+.statusbar--mobile-radium .statusbar__item,
+.statusbar--mobile-radium .statusbar__project,
+.statusbar--mobile-radium .statusbar__warn-btn,
+.statusbar--mobile-radium .statusbar__branch-btn,
+.statusbar--mobile-radium .statusbar__theme-btn,
+.statusbar--mobile-radium .statusbar__clock {
+  color: inherit;
+}
+
 .statusbar__chevron {
   flex-shrink: 0;
   margin-left: -4px;

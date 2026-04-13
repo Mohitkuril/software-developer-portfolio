@@ -85,6 +85,11 @@ Flow: user picks a file in **Explorer** or **TabBar** → `openTab(id)` → `act
 
 Static assets and crawlers: `favicon.svg`, `og-card.svg`, `robots.txt`, `sitemap.xml` (sitemap uses **https://mohitkuril.xyz/**). Resume PDF and any extra assets live here too.
 
+### Custom 404 (wrong paths after `/`)
+
+- Anything in `public/` is copied to the **root of the built site**, not under `/public/`. So `public/404.html` becomes **`https://your-domain/404.html`** and hosts (e.g. Vercel) use it for unknown routes like `/random-page`.
+- Do not expect the live URL to be `/public/404.html` — `public` is a **build-time folder name** only.
+
 ---
 
 ## Scripts

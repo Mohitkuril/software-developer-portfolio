@@ -352,14 +352,42 @@ function ExperienceView() {
 function ContactView() {
   const c = siteConfig.contact
   const [status, setStatus] = useState<string | null>(null)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
-    if (!c.formspreeAction) {
-      e.preventDefault()
-      setStatus('Add your Formspree URL in siteConfig.contact.formspreeAction to enable the form.')
+  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    if (isSubmitting) return
+
+    if (!c.web3FormsAccessKey) {
+      setStatus('Add your Web3Forms access key in siteConfig.contact.web3FormsAccessKey.')
       return
     }
-    setStatus(null)
+
+    setIsSubmitting(true)
+    setStatus('Sending...')
+
+    try {
+      const formEl = e.currentTarget
+      const formData = new FormData(formEl)
+      formData.append('access_key', c.web3FormsAccessKey)
+
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: formData,
+      })
+
+      const data = (await response.json()) as { success?: boolean; message?: string }
+      if (data.success) {
+        setStatus('Success! Message sent.')
+        formEl.reset()
+      } else {
+        setStatus(data.message || 'Error: Could not send message.')
+      }
+    } catch {
+      setStatus('Error: Network issue. Please try again.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -394,7 +422,7 @@ function ContactView() {
         </section>
         <section className="contact-col" {...aos('fade-left', { delay: 100 })}>
           <h2 className="section-kicker">{c.sendTitle}</h2>
-          <form className="contact-form" action={c.formspreeAction || undefined} method="post" onSubmit={onSubmit}>
+          <form className="contact-form" onSubmit={onSubmit}>
             <label className="contact-form__label">
               <span className="contact-form__hint">
                 // YOUR_NAME <span className="contact-form__req">*</span>
@@ -413,8 +441,8 @@ function ContactView() {
               </span>
               <textarea className="contact-form__input contact-form__textarea" name="message" required rows={5} placeholder='"""your message"""' />
             </label>
-            <button type="submit" className="contact-form__submit">
-              → send_message()
+            <button type="submit" className="contact-form__submit" disabled={isSubmitting}>
+              {isSubmitting ? '→ sending_message()' : '→ send_message()'}
             </button>
             <p className="contact-form__note">{c.formNote}</p>
           </form>

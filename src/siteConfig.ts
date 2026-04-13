@@ -124,6 +124,41 @@ export const siteConfig = {
   projectsConst: 'const projects = [ ...production, ...experiments ]',
   projects: [
     {
+      name: 'Integrate Leads – Recruitment Platform',
+      category: 'REACT · PLATFORM · SAAS',
+      accent: '#6366f1',
+      emoji: '💼',
+      description:
+        'A modern recruitment platform connecting employers and job seekers across India and the United States. Built to streamline hiring workflows, the platform enables recruiters to post job requirements, broadcast emails, and manage candidate pipelines from a centralized dashboard. Designed with a focus on speed, automation, and scalability for high-volume and skill-based hiring.',
+      highlights: [
+        'Job posting system with custom screening questions',
+        'Bulk email broadcasting to candidate database',
+        'Centralized recruiter dashboard for hiring workflows',
+        'Multi-country support (India & USA job markets)',
+        'Cloud-based access with secure data handling',
+      ] as const,
+      liveUrl: 'https://integrateleads.com/', // replace
+      githubUrl: '#', // replace
+      tech: ['React', 'Tailwind CSS', 'JavaScript'],
+    },
+     {
+      name: 'Rudransh & Co. – CA Firm Website',
+      category: 'REACT · BUSINESS WEBSITE · SEO',
+      accent: '#22c55e',
+      emoji: '📈',
+      description:
+        'A professional business website built for a chartered accountant firm offering GST, ITR, TDS, and audit services. Designed to establish trust and generate leads, the site focuses on clear service presentation, strong call-to-actions, and mobile-first responsiveness. Built with a clean UI and structured content optimized for local SEO in Hyderabad.',
+      highlights: [
+        'Service-focused landing sections for GST, ITR, TDS & audits',
+        'Lead generation with call, email, and consultation CTAs',
+        'Responsive design optimized for mobile and local users',
+        'SEO-friendly structure targeting Hyderabad-based services',
+      ] as const,
+      liveUrl: 'https://rudranshcompany.vercel.app/', // replace with actual
+      githubUrl: 'https://github.com/Mohitkuril/Rudransh-website', // replace if available
+      tech: ['React', 'Tailwind CSS', 'JavaScript'],
+    },
+    {
       name: 'Chat With PDF',
       category: 'REACT · AI · PRODUCTIVITY',
       /** Radium accent: category line + hover top border */
@@ -158,7 +193,7 @@ export const siteConfig = {
     },
     {
       name: 'Text-to-Image Generator',
-      category: 'VANILLA JS · APIs',
+     category: 'AI · APIs · FRONTEND',
       accent: '#c4a7e7',
       emoji: '🖼️',
       description:
@@ -173,7 +208,7 @@ export const siteConfig = {
       tech: ['HTML', 'CSS', 'JavaScript'],
     },
     {
-      name: 'Weather App (ClimateToTrack)',
+      name: 'Weather App',
       category: 'SPA · WEATHER API',
       accent: '#2dd4bf',
       emoji: '🌤️',
@@ -204,6 +239,7 @@ export const siteConfig = {
       githubUrl: 'https://peteye.pet/',
       tech: ['React', 'Tailwind CSS', 'Redux', 'JavaScript'],
     },
+   
   ] as const,
 
   skillsSubtitle: '{ "focus": "react_ecosystem", "ui": "tailwind_mantine" }',
@@ -316,8 +352,8 @@ export const siteConfig = {
         accent: 'purple' as const,
       },
     ] as const,
-    formspreeAction: '',
-    formNote: '// Powered by Formspree (lands directly in my inbox) :p',
+    web3FormsAccessKey: '8cb6341f-acc1-44c6-92c9-da901434f9ee',
+    formNote: '// Powered by Web3Forms (lands directly in my inbox) :p',
   },
 
   readme: {

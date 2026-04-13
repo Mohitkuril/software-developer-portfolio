@@ -62,7 +62,8 @@ export function IdeApp() {
   useLenisOnElement(scrollRef, enableLenis)
 
   useEffect(() => {
-    if (!isMobile) setExplorerOpen(true)
+    // Keep desktop behavior unchanged, but never auto-open explorer on mobile.
+    setExplorerOpen(!isMobile)
   }, [isMobile])
 
   useEffect(() => {
