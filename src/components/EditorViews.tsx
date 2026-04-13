@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import type { FormEvent } from 'react'
 import { FaEnvelope, FaGithub, FaLinkedin, FaXTwitter } from 'react-icons/fa6'
-import { VscCloudDownload, VscLinkExternal } from 'react-icons/vsc'
+import { SiMantine, SiNextdotjs, SiReact, SiRedux, SiTailwindcss, SiTypescript } from 'react-icons/si'
+import { VscCloudDownload, VscCode, VscLinkExternal } from 'react-icons/vsc'
 import { aos } from '../lib/motion'
 import { triggerResumeDownload } from '../resumeDownload'
 import { siteConfig } from '../siteConfig'
@@ -464,6 +465,26 @@ function readmeEmphasis(text: string) {
   )
 }
 
+function ReadmeTechIcon({ label }: { label: string }) {
+  const ic = { size: 15, className: 'readme-badge__ic', 'aria-hidden': true as const }
+  switch (label) {
+    case 'React':
+      return <SiReact {...ic} />
+    case 'TypeScript':
+      return <SiTypescript {...ic} />
+    case 'Next.js':
+      return <SiNextdotjs {...ic} />
+    case 'Tailwind':
+      return <SiTailwindcss {...ic} />
+    case 'Redux':
+      return <SiRedux {...ic} />
+    case 'Mantine':
+      return <SiMantine {...ic} />
+    default:
+      return <VscCode {...ic} />
+  }
+}
+
 function ReadmeView() {
   const r = siteConfig.readme
   return (
@@ -480,7 +501,8 @@ function ReadmeView() {
           <div className="readme-badges">
             {r.badgeStack.map((b) => (
               <span key={b.label} className={`readme-badge readme-badge--${b.accent}`}>
-                {b.label}
+                <ReadmeTechIcon label={b.label} />
+                <span className="readme-badge__label">{b.label}</span>
               </span>
             ))}
           </div>

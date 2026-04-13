@@ -358,7 +358,7 @@ export const siteConfig = {
 
   readme: {
     headline: 'Mohit Kuril',
-    subline: 'Front-End Developer · Hyderabad, India · https://mohitkuril.xyz/',
+    subline: 'Front-End Developer · Hyderabad, India',
     /** Outline-style badges (accent = border / label tint) */
     badgeStack: [
       { label: 'React', accent: 'blue' as const },

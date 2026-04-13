@@ -2006,6 +2006,20 @@
   border-color: #58a6ff;
 }
 
+/* About — desktop: narrow column (~50% of editor) */
+@media (min-width: 901px) {
+  .editor-view.page.page--about {
+    max-width: 50%;
+    width: 100%;
+  }
+
+  .page--about .about-glass,
+  .page--about .focus-grid,
+  .page--about .education-list {
+    max-width: 100%;
+  }
+}
+
 /* About */
 .section-kicker {
   font-size: 11px;
@@ -2429,6 +2443,15 @@
   color: #8b949e;
 }
 
+/* Experience — extra air between interface line and timeline */
+.page--experience .page-code-line {
+  margin-bottom: 28px;
+}
+
+.page--experience .timeline {
+  margin-top: 32px;
+}
+
 /* Experience timeline */
 .timeline {
   list-style: none;
@@ -2793,14 +2816,18 @@
 }
 
 .readme-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
   font-family: var(--mono);
   font-size: 11px;
   font-weight: 600;
-  padding: 7px 14px;
-  border-radius: 999px;
+  padding: 6px 11px;
+  border-radius: 6px;
   border: 1px solid;
-  background: rgba(20, 22, 26, 0.9);
+  background: rgba(13, 15, 20, 0.92);
   color: #e6edf3;
+  line-height: 1.2;
   transition:
     transform 0.18s ease,
     box-shadow 0.2s ease,
@@ -2808,10 +2835,18 @@
     background 0.18s ease;
 }
 
+.readme-badge__label {
+  min-width: 0;
+}
+
+.readme-badge__ic {
+  flex-shrink: 0;
+}
+
 .readme-badge:hover {
   transform: translateY(-1px);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.28);
-  background: rgba(22, 27, 34, 0.95);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+  background: rgba(20, 24, 32, 0.96);
 }
 
 .readme-badge--blue {
@@ -2819,9 +2854,17 @@
   color: #79c0ff;
 }
 
+.readme-badge--blue .readme-badge__ic {
+  color: #58a6ff;
+}
+
 .readme-badge--cyan {
   border-color: #39c5cf;
   color: #56d9e3;
+}
+
+.readme-badge--cyan .readme-badge__ic {
+  color: #39c5cf;
 }
 
 .readme-badge--teal {
@@ -2829,14 +2872,26 @@
   color: #5eead4;
 }
 
+.readme-badge--teal .readme-badge__ic {
+  color: #2dd4bf;
+}
+
 .readme-badge--violet {
   border-color: #a371f7;
   color: #d2a8ff;
 }
 
+.readme-badge--violet .readme-badge__ic {
+  color: #a371f7;
+}
+
 .readme-badge--pink {
   border-color: #f778ba;
   color: #ff9bce;
+}
+
+.readme-badge--pink .readme-badge__ic {
+  color: #f778ba;
 }
 
 .readme-resume-btn {
@@ -2846,11 +2901,11 @@
   font-family: var(--mono);
   font-size: 11px;
   font-weight: 600;
-  padding: 8px 16px 8px 14px;
+  padding: 7px 15px 7px 12px;
   border-radius: 999px;
-  border: 1px solid var(--readme-pill-border);
-  background: rgba(46, 43, 41, 0.55);
-  color: var(--readme-pill-text);
+  border: 1px solid #3d4046;
+  background: rgba(28, 30, 36, 0.95);
+  color: #e8c4ae;
   cursor: pointer;
   transition:
     border-color 0.18s ease,
@@ -2862,14 +2917,14 @@
 .readme-resume-btn__icon {
   flex-shrink: 0;
   opacity: 0.95;
-  color: var(--readme-pill-text-hover);
+  color: #e8c4ae;
 }
 
 .readme-resume-btn:hover {
-  border-color: #6b6158;
-  color: var(--readme-pill-text-hover);
-  background: rgba(58, 54, 51, 0.85);
-  box-shadow: 0 0 0 1px rgba(232, 196, 174, 0.12);
+  border-color: #5c6370;
+  color: #f5e0d0;
+  background: rgba(36, 38, 46, 0.98);
+  box-shadow: 0 0 0 1px rgba(232, 196, 174, 0.1);
 }
 
 .readme-resume-btn:focus-visible {
@@ -2923,6 +2978,14 @@
   border: 1px solid var(--readme-border);
   background: rgba(22, 24, 28, 0.5);
   text-align: left;
+}
+
+/* README “💜 About” card — half the README column on desktop (not full hero width) */
+@media (min-width: 901px) {
+  .editor-view.page.page--readme .readme-about {
+    max-width: 50%;
+    width: 100%;
+  }
 }
 
 .readme-p--about {
