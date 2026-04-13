@@ -60,7 +60,7 @@ Flow: user picks a file in **Explorer** or **TabBar** → `openTab(id)` → `act
 
 | Path | Role |
 |------|------|
-| `hooks/useLenisOnElement.ts` | Smooth scrolling on the editor scroll container. |
+| `hooks/useLenisOnElement.ts` | Smooth scrolling on the editor scroll container; scrolls to top when the active tab id changes. |
 | `hooks/useMediaQuery.ts` | Breakpoints (e.g. mobile layout under 900px width). |
 | `hooks/usePortfolioMotion.ts` | Ties motion / AOS-style behavior to the active tab. |
 | `lib/themes.ts` | Theme ids, labels, `localStorage` persistence. |

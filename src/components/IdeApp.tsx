@@ -59,7 +59,7 @@ export function IdeApp() {
   const enableLenis = !prefersReducedMotion
 
   usePortfolioMotion(active, scrollRef)
-  useLenisOnElement(scrollRef, enableLenis)
+  useLenisOnElement(scrollRef, enableLenis, active)
 
   useEffect(() => {
     // Keep desktop behavior unchanged, but never auto-open explorer on mobile.
