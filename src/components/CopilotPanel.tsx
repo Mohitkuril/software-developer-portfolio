@@ -18,9 +18,11 @@ function formatMsgTime(ts: number) {
 type Props = {
   activeTab: FileTab
   onClose: () => void
+  /** Mobile full-screen sheet: shorter composer so the message thread gets more vertical space */
+  compactComposer?: boolean
 }
 
-export function CopilotPanel({ activeTab, onClose }: Props) {
+export function CopilotPanel({ activeTab, onClose, compactComposer }: Props) {
   const { copilot } = siteConfig
   const [messages, setMessages] = useState<Msg[]>([])
   const [apiThread, setApiThread] = useState<GroqChatMessage[]>([])
@@ -266,7 +268,7 @@ The visitor is currently focused on the "${activeTab}" tab in a VS Code–style 
             }
             value={draft}
             onChange={(e) => setDraft(e.target.value)}
-            rows={3}
+            rows={compactComposer ? 2 : 3}
             aria-label="Message"
             disabled={boot !== 'ready' || isSending}
           />

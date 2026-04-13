@@ -54,7 +54,7 @@ function HomeView({ onOpenTab }: { onOpenTab: (id: FileTab) => void }) {
       </h1>
       <div className="badge-row" {...aos('fade-up', { delay: 90 })}>
         {c.roleBadges.map((b) =>
-          'href' in b && b.href ? (
+          'href' in b && typeof b.href === 'string' && b.href ? (
             <a key={b.label} className={`badge badge--${b.tone}`} href={b.href} target="_blank" rel="noreferrer">
               {b.label}
             </a>

@@ -1283,9 +1283,9 @@
 }
 
 .ide__copilot-mobile .copilot2__hero-mascot {
-  width: 44px;
-  height: 44px;
-  margin: 0 auto 8px;
+  width: 40px;
+  height: 40px;
+  margin: 0 auto 6px;
 }
 
 .ide__copilot-mobile .copilot2__hero-title {
@@ -1304,6 +1304,8 @@
 .ide__copilot-mobile .copilot2__scroll {
   padding: 8px 10px 6px;
   gap: 8px;
+  /* Prefer thread over chrome on small sheets */
+  min-height: 120px;
 }
 
 .ide__copilot-mobile .copilot2__msg {
@@ -1348,8 +1350,10 @@
 
 .ide__copilot-mobile .copilot2__textarea {
   font-size: 11px;
-  padding: 8px 10px;
-  min-height: 56px;
+  padding: 6px 10px;
+  min-height: 40px;
+  max-height: 72px;
+  line-height: 1.45;
 }
 
 .ide__copilot-mobile .copilot2__composer-foot {
@@ -2225,6 +2229,43 @@
   align-items: center;
 }
 
+/* Mobile IDE layout only: category beside icon; Live/GitHub on next row — no crowding */
+.ide--mobile .project-card-ref {
+  padding: 16px 16px 18px;
+}
+
+.ide--mobile .project-card-ref__top {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: 10px;
+  row-gap: 10px;
+  align-items: start;
+  margin-bottom: 10px;
+}
+
+.ide--mobile .project-card-ref__emoji {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.ide--mobile .project-card-ref__cat {
+  grid-column: 2;
+  grid-row: 1;
+  flex: unset;
+  min-width: 0;
+  line-height: 1.45;
+  align-self: center;
+}
+
+.ide--mobile .project-card-ref__links {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+  width: 100%;
+}
+
 .project-card-ref__link {
   display: inline-flex;
   align-items: center;
@@ -2798,21 +2839,18 @@
   gap: 10px;
 }
 
-@media (max-width: 480px) {
-  .readme-badges {
-    flex: 1 1 100%;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    max-width: 100%;
-    padding-bottom: 8px;
-    gap: 8px;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: thin;
-  }
+/* Mobile IDE: wrap tech badges (no horizontal scroll strip above About) */
+.ide--mobile .readme-badges {
+  flex: 1 1 100%;
+  flex-wrap: wrap;
+  overflow-x: visible;
+  max-width: 100%;
+  padding-bottom: 0;
+  gap: 8px;
+}
 
-  .readme-resume-btn {
-    flex-shrink: 0;
-  }
+.ide--mobile .readme-resume-btn {
+  flex-shrink: 0;
 }
 
 .readme-badge {

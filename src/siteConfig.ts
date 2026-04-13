@@ -30,7 +30,6 @@ export const siteConfig = {
     { label: 'Frontend Developer', tone: 'teal' as const },
     { label: 'React.js', tone: 'pink' as const },
     { label: 'Next.js & TypeScript', tone: 'blue' as const },
-    { label: 'Live site', tone: 'magenta' as const, href: 'https://mohitkuril.xyz/' },
   ],
   introSegments: [
     { text: "I'm a " },
@@ -50,7 +49,7 @@ export const siteConfig = {
 
   homeStats: [
     { value: '3+', label: 'YEARS' },
-    { value: '10+', label: 'PROJECTS' },
+    { value: '7+', label: 'PROJECTS' },
     { value: '∞', label: 'CURIOSITY' },
     { value: '↑', label: 'ALWAYS LEARNING', wide: true as const },
   ],

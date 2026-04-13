@@ -370,7 +370,7 @@ export function IdeApp() {
               className="ide__copilot-mobile ide__copilot-mobile--full"
               onMouseDown={(e) => e.stopPropagation()}
             >
-              <CopilotPanel activeTab={active} onClose={closeCopilot} />
+              <CopilotPanel activeTab={active} onClose={closeCopilot} compactComposer />
             </div>
           </div>,
           document.body,
