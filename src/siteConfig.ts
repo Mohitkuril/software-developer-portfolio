@@ -413,6 +413,13 @@ export const siteConfig = {
       'How do I contact Mohit?',
       'Where is the live portfolio?',
     ] as const,
+    signInStatusLines: [
+      'Copilot is signing in…',
+      'Pulling resume from the workspace…',
+      'Extracting PDF text…',
+      'Indexing résumé for Groq…',
+      'Almost ready…',
+    ] as const,
     inputPlaceholder: 'Ask about projects, experience, skills…',
     msgsLeftLabel: '0 msgs left',
     footerDisclaimer: 'AI can make mistakes · Contact Mohit directly for important info',
