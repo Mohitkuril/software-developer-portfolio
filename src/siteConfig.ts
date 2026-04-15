@@ -59,11 +59,10 @@ export const siteConfig = {
     {
       id: 'linkedin',
       label: 'LinkedIn',
-      href: 'https://www.linkedin.com/in/mohit-kuril/',
+      href: 'https://www.linkedin.com/in/mohit-kuril-84884926b',
       icon: 'linkedin' as const,
     },
     { id: 'email', label: 'Email', href: 'mailto:mohitkuril5@gmail.com', icon: 'email' as const },
-    { id: 'twitter', label: 'X', href: 'https://mohitkuril.xyz/', icon: 'twitter' as const },
   ],
 
   /** Shown in explorer / menus (may truncate in UI) */
@@ -251,7 +250,7 @@ export const siteConfig = {
         { name: 'HTML', pct: 92, color: '#FF8C00' },
         { name: 'CSS', pct: 90, color: '#00CED1' },
         { name: 'Python', pct: 78, color: '#FF00FF' },
-        { name: 'AQL', pct: 72, color: '#32CD32' },
+        { name: 'SQL', pct: 72, color: '#32CD32' },
       ],
     },
     {

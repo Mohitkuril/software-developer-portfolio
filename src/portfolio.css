@@ -265,6 +265,12 @@
   min-height: 0;
 }
 
+/* Mobile: keep vertical scrolling but prevent horizontal overflow "extra space". */
+.ide--mobile .ide__editor-scroll {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
 .ide__editor-scroll--fx {
   position: relative;
 }
