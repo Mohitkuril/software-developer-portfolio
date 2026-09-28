@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import type { FormEvent } from 'react'
 import { FaEnvelope, FaGithub, FaLinkedin, FaXTwitter } from 'react-icons/fa6'
-import { SiMantine, SiNextdotjs, SiReact, SiRedux, SiTailwindcss, SiTypescript } from 'react-icons/si'
+import { SiFastapi, SiMantine, SiNextdotjs, SiPython, SiReact, SiRedux, SiTailwindcss, SiTypescript } from 'react-icons/si'
 import { VscCloudDownload, VscCode, VscLinkExternal } from 'react-icons/vsc'
 import { aos } from '../lib/motion'
 import { triggerResumeDownload } from '../resumeDownload'
@@ -480,6 +480,10 @@ function ReadmeTechIcon({ label }: { label: string }) {
       return <SiRedux {...ic} />
     case 'Mantine':
       return <SiMantine {...ic} />
+    case 'Python':
+      return <SiPython {...ic} />
+    case 'FastAPI':
+      return <SiFastapi {...ic} />
     default:
       return <VscCode {...ic} />
   }

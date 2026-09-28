@@ -1,6 +1,21 @@
 /**
- * Mohit Kuril — portfolio copy aligned with https://mohitkuril.xyz/ and the classic React site in /website.
+ * Mohit Kuril — portfolio copy aligned with resume (Mohit_Kuril_Full_Stack_Software_Engineer_Resume.pdf)
+ * and https://mohitkuril.xyz/
  */
+
+/**
+ * Dynamic experience calculation based on career start date (Wipro Ltd.: Dec 2021).
+ */
+export function calculateYearsOfExperience(startDateStr: string = '2021-12-01'): string {
+  const start = new Date(startDateStr)
+  const now = new Date()
+  const totalMonths = (now.getFullYear() - start.getFullYear()) * 12 + (now.getMonth() - start.getMonth())
+  const years = Math.floor(totalMonths / 12)
+  return `${years}+`
+}
+
+const expYears = calculateYearsOfExperience()
+
 export const siteConfig = {
   handle: 'mohitkuril',
   displayName: 'Mohit Kuril',
@@ -23,34 +38,41 @@ export const siteConfig = {
     viewGithubLabel: 'View on GitHub',
   } as const,
 
-  roleLine: 'Frontend Developer · Hyderabad, India 🇮🇳',
+  roleLine: 'Software Engineer | Full Stack Developer · Hyderabad, India 🇮🇳',
   homeComment: '// hello world — welcome to my portfolio',
-  heroTagline: 'Responsive interfaces, React-first, and product-minded delivery.',
+  heroTagline: 'Dynamic, responsive, and scalable web applications with React, Next.js, TypeScript, and FastAPI.',
   roleBadges: [
-    { label: 'Frontend Developer', tone: 'teal' as const },
-    { label: 'React.js', tone: 'pink' as const },
-    { label: 'Next.js & TypeScript', tone: 'blue' as const },
+    { label: 'Software Engineer', tone: 'teal' as const },
+    { label: 'Full Stack Developer', tone: 'pink' as const },
+    { label: 'React.js & Next.js', tone: 'blue' as const },
+    { label: 'Python & FastAPI', tone: 'orange' as const },
   ],
   introSegments: [
     { text: "I'm a " },
-    { text: 'Front-End Developer', highlight: true },
-    { text: ' specializing in ' },
-    { text: 'React.js', highlight: true },
-    { text: ', building responsive, user-friendly web apps with ' },
-    { text: 'Tailwind CSS', highlight: true },
+    { text: 'Software Engineer & Full Stack Developer', highlight: true },
+    { text: ` with ${expYears} years of experience building dynamic, responsive, and scalable web applications. Strong frontend foundation in ` },
+    { text: 'ReactJS', highlight: true },
     { text: ', ' },
     { text: 'Next.js', highlight: true },
-    { text: ', and ' },
+    { text: ', ' },
     { text: 'TypeScript', highlight: true },
-    {
-      text: '. Recent work spans Chat with PDF, a React dashboard, a text-to-image tool, and a weather app — focused on clean UX, performance, and maintainable code.',
-    },
+    { text: ', ' },
+    { text: 'Redux', highlight: true },
+    { text: ', ' },
+    { text: 'Tailwind CSS', highlight: true },
+    { text: ', and ' },
+    { text: 'Micro Frontend Architecture', highlight: true },
+    { text: ', with hands-on experience developing backend services using ' },
+    { text: 'Python', highlight: true },
+    { text: ' & ' },
+    { text: 'FastAPI', highlight: true },
+    { text: ' alongside PostgreSQL, MySQL, and MongoDB.' },
   ] as const,
 
   homeStats: [
-    { value: '3+', label: 'YEARS' },
+    { value: expYears, label: 'YEARS EXP' },
     { value: '7+', label: 'PROJECTS' },
-    { value: '∞', label: 'CURIOSITY' },
+    { value: '15+', label: 'SKILLS & TECH' },
     { value: '↑', label: 'ALWAYS LEARNING', wide: true as const },
   ],
 
@@ -66,11 +88,11 @@ export const siteConfig = {
   ],
 
   /** Shown in explorer / menus (may truncate in UI) */
-  resumeFileLabel: 'Mohit Kuril_Frontend Developer.pdf',
+  resumeFileLabel: 'Mohit_Kuril_Full_Stack_Software_Engineer_Resume.pdf',
   /** File in /public — served at site root */
-  resumeUrl: '/Mohit Kuril_Frontend Developer.pdf',
+  resumeUrl: '/Mohit_Kuril_Full_Stack_Software_Engineer_Resume.pdf',
   /** Browser “Save as” default name (no spaces) */
-  resumeDownloadFileName: 'Mohit_Kuril_Frontend_Developer.pdf',
+  resumeDownloadFileName: 'Mohit_Kuril_Full_Stack_Software_Engineer_Resume.pdf',
 
   about: {
     htmlComment: '<!-- about.html - Mohit Kuril -->',
@@ -79,41 +101,65 @@ export const siteConfig = {
       { text: "Hi, I'm " },
       { text: 'Mohit Kuril', highlight: true },
       {
-        text: ', a web application developer based in Hyderabad with experience shipping responsive, user-friendly interfaces. I work with ',
+        text: `, a Software Engineer & Full Stack Developer based in Hyderabad, India with ${expYears} years of professional experience building dynamic, responsive, and scalable web applications. I specialize in `,
       },
-      { text: 'React.js', highlight: true },
+      { text: 'ReactJS', highlight: true },
+      { text: ', ' },
+      { text: 'Next.js', highlight: true },
+      { text: ', ' },
+      { text: 'TypeScript', highlight: true },
       { text: ', ' },
       { text: 'Redux', highlight: true },
       { text: ', ' },
-      { text: 'JavaScript', highlight: true },
-      { text: ', ' },
       { text: 'Tailwind CSS', highlight: true },
       { text: ', ' },
-      { text: 'Next.js', highlight: true },
+      { text: 'Mantine UI', highlight: true },
       { text: ', and ' },
-      { text: 'TypeScript', highlight: true },
+      { text: 'Micro Frontend Architecture', highlight: true },
       {
-        text: ' — from AI-assisted tools like Chat with PDF to dashboards, generators, and real-time experiences.',
+        text: ', with active backend experience in ',
       },
+      { text: 'Python', highlight: true },
+      { text: ', ' },
+      { text: 'FastAPI', highlight: true },
+      { text: ', and databases including ' },
+      { text: 'PostgreSQL, MySQL, and MongoDB', highlight: true },
+      { text: '.' },
     ] as const,
     focusTitle: 'CURRENT FOCUS',
     focusItems: [
-      { emoji: '⚛️', text: 'Micro frontends, modular React, and scalable UI architecture.' },
-      { emoji: '🎯', text: 'Performance: lazy loading, code splitting, and measurable UX.' },
-      { emoji: '🤝', text: 'Collaborating with design (Figma) and backend for cohesive products.' },
-      { emoji: '🚀', text: 'Agile delivery, Git workflows, and CI/CD–friendly practices.' },
+      { emoji: '⚛️', text: 'Micro Frontend architecture, modular React & Next.js UI development.' },
+      { emoji: '⚡', text: 'Backend services & REST API development using Python and FastAPI.' },
+      { emoji: '🗄️', text: 'Data application workflows with PostgreSQL, MySQL, and MongoDB.' },
+      { emoji: '🎯', text: 'Performance optimization: lazy loading, code splitting, and measurable UX efficiency.' },
+      { emoji: '🤝', text: 'Translating Figma designs into production-ready interfaces & Agile team collaboration.' },
     ] as const,
-    educationTitle: 'HIGHLIGHTS',
+    educationTitle: 'EXPERIENCE & EDUCATION',
     education: [
       {
-        school: 'Professional experience',
-        detail: 'SignalX · KR Peteye LLP · Wipro — frontend & product delivery',
-        years: '2021 — Present',
+        school: 'Front-End Developer — SignalX',
+        detail: 'ReactJS, Next.js, TypeScript, Mantine UI, Micro Frontends, Python & FastAPI, PostgreSQL, MongoDB, Git/CI/CD',
+        years: 'May 2025 — Present',
       },
       {
-        school: 'Stack depth',
-        detail: 'React, Next.js, Mantine UI, Redux, REST & AI APIs',
-        years: 'Continuous',
+        school: 'Front-End Developer — KR PETEYE LLP',
+        detail: 'ReactJS, JavaScript, HTML/CSS, Tailwind CSS, Data Workflows, E-commerce, Figma conversion',
+        years: 'Jan 2024 — Apr 2025',
+      },
+      {
+        school: 'Project Engineer — Wipro Ltd.',
+        detail: 'HTML, CSS, JavaScript, ReactJS, UI Component Architecture, Agile Ceremonies & Defect Triage',
+        years: 'Dec 2021 — May 2023',
+      },
+      {
+        school: 'B.Tech in Computer Science & Engineering',
+        detail: 'Malla Reddy Institute of Technology and Science | Jul 2017 — Aug 2021 | Hyderabad, India',
+        years: '2017 — 2021',
+      },
+      {
+        school: 'Certifications',
+        detail: 'ReactJS Certification (Aug 2023) & Web Developer Certification (Jun 2023) — Edyoda LMS',
+        years: '2023',
       },
     ] as const,
   },
@@ -135,11 +181,11 @@ export const siteConfig = {
         'Multi-country support (India & USA job markets)',
         'Cloud-based access with secure data handling',
       ] as const,
-      liveUrl: 'https://integrateleads.com/', // replace
-      githubUrl: '#', // replace
+      liveUrl: 'https://integrateleads.com/',
+      githubUrl: '#',
       tech: ['React', 'Tailwind CSS', 'JavaScript'],
     },
-     {
+    {
       name: 'Rudransh & Co. – CA Firm Website',
       category: 'REACT · BUSINESS WEBSITE · SEO',
       accent: '#22c55e',
@@ -152,14 +198,13 @@ export const siteConfig = {
         'Responsive design optimized for mobile and local users',
         'SEO-friendly structure targeting Hyderabad-based services',
       ] as const,
-      liveUrl: 'https://rudranshcompany.vercel.app/', // replace with actual
-      githubUrl: 'https://github.com/Mohitkuril/Rudransh-website', // replace if available
+      liveUrl: 'https://rudranshcompany.vercel.app/',
+      githubUrl: 'https://github.com/Mohitkuril/Rudransh-website',
       tech: ['React', 'Tailwind CSS', 'JavaScript'],
     },
     {
       name: 'Chat With PDF',
       category: 'REACT · AI · PRODUCTIVITY',
-      /** Radium accent: category line + hover top border */
       accent: '#ff4baf',
       emoji: '📄',
       description:
@@ -191,11 +236,11 @@ export const siteConfig = {
     },
     {
       name: 'Text-to-Image Generator',
-     category: 'AI · APIs · FRONTEND',
+      category: 'AI · APIs · FRONTEND',
       accent: '#c4a7e7',
       emoji: '🖼️',
       description:
-        'A vanilla JavaScript front end over the Hugging Face inference API: prompt box, history-friendly requests, modal image previews, and lightweight caching so repeat prompts feel instant. The UI stays intentionally simple—progressive enhancement, accessible buttons, and lazy-loaded assets to keep first paint fast on slower networks.',
+        'A vanilla JavaScript front end over the Hugging Face inference API: prompt box, history-friendly requests, modal image previews, and lightweight caching so repeat prompts feel instant. Intentionally simple UI with progressive enhancement and accessible controls.',
       highlights: [
         'REST calls to Hugging Face with clear error surfaces',
         'Modal previews, keyboard dismiss, and optimistic UI touches',
@@ -211,7 +256,7 @@ export const siteConfig = {
       accent: '#2dd4bf',
       emoji: '🌤️',
       description:
-        'A single-page weather experience focused on clarity: search by city, show temperature, humidity, wind, and conditions at a glance, and adapt layout cleanly from phone to desktop. OpenWeather (or similar) responses are normalized into a small view-model so the UI stays stable even when the API shape varies slightly by location.',
+        'A single-page weather experience focused on clarity: search by city, show temperature, humidity, wind, and conditions at a glance, and adapt layout cleanly from phone to desktop.',
       highlights: [
         'City search with debounced requests and empty states',
         'Responsive cards and typography tuned for outdoor readability',
@@ -227,71 +272,65 @@ export const siteConfig = {
       accent: '#fb923c',
       emoji: '🐾',
       description:
-        'Peteye is a React dashboard for pet owners and clinics: health timelines, monitoring widgets, and workflows that stay usable on small screens. Tailwind keeps spacing consistent, Redux centralizes cross-page data, and the experience is optimized for repeated daily use—clear hierarchy, obvious CTAs, and resilient forms.',
+        'Peteye is a React dashboard for pet owners and clinics: health timelines, monitoring widgets, and workflows optimized for repeated daily use.',
       highlights: [
         'React + Tailwind + Redux for scalable feature growth',
-        'Role-style views for owners vs staff (where applicable)',
+        'Role-style views for owners vs staff',
         'Production deployment with emphasis on performance and UX polish',
       ] as const,
       liveUrl: 'https://peteye.pet/',
       githubUrl: 'https://peteye.pet/',
       tech: ['React', 'Tailwind CSS', 'Redux', 'JavaScript'],
     },
-   
   ] as const,
 
-  skillsSubtitle: '{ "focus": "react_ecosystem", "ui": "tailwind_mantine" }',
+  skillsSubtitle: '{ "focus": "full_stack_web_dev", "ui": "react_next_tailwind_mantine", "backend": "python_fastapi_sql" }',
   skillCategories: [
     {
-      title: 'LANGUAGES',
+      title: 'FRONTEND',
       items: [
-        { name: 'JavaScript', pct: 90, color: '#FFD700' },
-        { name: 'TypeScript', pct: 82, color: '#1E90FF' },
-        { name: 'HTML', pct: 92, color: '#FF8C00' },
-        { name: 'CSS', pct: 90, color: '#00CED1' },
-        { name: 'Python', pct: 78, color: '#FF00FF' },
-        { name: 'SQL', pct: 72, color: '#32CD32' },
-      ],
-    },
-    {
-      title: 'FRAMEWORKS & LIBS',
-      items: [
-        { name: 'React', pct: 92, color: '#32CD32' },
-        { name: 'Next.js', pct: 85, color: '#9932CC' },
-        { name: 'Redux', pct: 80, color: '#FF1493' },
-      ],
-    },
-    {
-      title: 'UI & STYLING',
-      items: [
-        { name: 'Tailwind CSS', pct: 90, color: '#1E90FF' },
-        { name: 'Mantine UI', pct: 78, color: '#00CED1' },
-        { name: 'Bootstrap', pct: 72, color: '#9370DB' },
+        { name: 'ReactJS', pct: 95, color: '#32CD32' },
+        { name: 'Next.js', pct: 90, color: '#9932CC' },
+        { name: 'TypeScript', pct: 88, color: '#1E90FF' },
+        { name: 'JavaScript', pct: 92, color: '#FFD700' },
+        { name: 'HTML5 & CSS3', pct: 95, color: '#FF8C00' },
+        { name: 'Redux', pct: 85, color: '#FF1493' },
+        { name: 'Tailwind CSS', pct: 92, color: '#1E90FF' },
+        { name: 'Mantine UI', pct: 82, color: '#00CED1' },
+        { name: 'Micro Frontend Architecture', pct: 88, color: '#FF00FF' },
+        { name: 'Responsive Web Design', pct: 95, color: '#32CD32' },
       ],
     },
     {
       title: 'BACKEND & APIS',
-      items: [{ name: 'FastAPI', pct: 80, color: '#00CED1' }],
-    },
-    {
-      title: 'DATABASE',
-      items: [{ name: 'MongoDB', pct: 82, color: '#32CD32' }],
-    },
-    {
-      title: 'FRONTEND',
-      items: [{ name: 'Responsive design', pct: 92, color: '#FF00FF' }],
-    },
-    {
-      title: 'TOOLING',
       items: [
-        { name: 'Git / GitHub', pct: 88, color: '#9932CC' },
-        { name: 'npm', pct: 85, color: '#FF8C00' },
-        { name: 'Chart.js', pct: 70, color: '#FF1493' },
-        { name: 'Linux', pct: 78, color: '#1E90FF' },
+        { name: 'Python', pct: 80, color: '#FFD700' },
+        { name: 'FastAPI', pct: 80, color: '#00CED1' },
+        { name: 'REST APIs & Integration', pct: 90, color: '#1E90FF' },
+      ],
+    },
+    {
+      title: 'DATABASES',
+      items: [
+        { name: 'SQL', pct: 78, color: '#32CD32' },
+        { name: 'PostgreSQL', pct: 78, color: '#1E90FF' },
+        { name: 'MySQL', pct: 75, color: '#FF8C00' },
+        { name: 'MongoDB', pct: 78, color: '#32CD32' },
+      ],
+    },
+    {
+      title: 'ENGINEERING & TOOLING',
+      items: [
+        { name: 'Git & GitHub', pct: 92, color: '#9932CC' },
+        { name: 'CI/CD Workflows', pct: 82, color: '#FF00FF' },
+        { name: 'Performance Optimization', pct: 88, color: '#00CED1' },
+        { name: 'Lazy Loading & Code Splitting', pct: 85, color: '#FF1493' },
+        { name: 'Agile / Scrum', pct: 88, color: '#FF8C00' },
+        { name: 'Figma', pct: 85, color: '#1E90FF' },
       ],
     },
   ] as const,
-  alsoFamiliar: ['Micro frontends', 'Groq API', 'IndexedDB', 'PDF.js', 'Figma', 'Agile / Scrum'],
+  alsoFamiliar: ['Micro Frontend Architecture', 'Lazy Loading & Code Splitting', 'Groq API', 'IndexedDB', 'PDF.js', 'Figma', 'Agile / Scrum', 'Edyoda LMS Certifications'],
 
   experienceComment: '// experience.ts — professional journey',
   experienceInterface: 'interface Career extends Timeline {}',
@@ -300,25 +339,28 @@ export const siteConfig = {
       period: 'May 2025 — Present',
       title: 'Front-End Developer',
       company: 'SignalX',
+      location: 'Hyderabad, India',
       description:
-        'Building high-performance UIs with React, Next.js (SSR/SSG), and TypeScript for data-heavy product surfaces. I work inside a micro-frontend style architecture with Mantine UI, shared design tokens, and disciplined performance work—lazy routes, code splitting, and measurable improvements to interaction latency.',
-      tags: ['React', 'Next.js', 'TypeScript', 'Mantine UI', 'Micro frontends'],
+        'Develop dynamic, responsive, and high-performance web interfaces using ReactJS, Next.js, TypeScript, JavaScript, HTML, and CSS. Implement Micro Frontend architecture to build modular applications and support independent development and deployment of modules. Build reusable UI components using Mantine UI. Integrate REST APIs and contribute to backend development using Python and FastAPI. Work with SQL and databases including PostgreSQL, MySQL, and MongoDB. Optimize performance through lazy loading and code splitting.',
+      tags: ['ReactJS', 'Next.js', 'TypeScript', 'Mantine UI', 'Micro Frontends', 'Python', 'FastAPI', 'PostgreSQL', 'MongoDB', 'Git / CI/CD'],
     },
     {
       period: 'Jan 2024 — Apr 2025',
       title: 'Front-End Developer',
-      company: 'KR Peteye LLP',
+      company: 'KR PETEYE LLP',
+      location: 'Hyderabad, India',
       description:
-        'Owned feature delivery across dashboards and marketing flows using React, Redux, JavaScript, and Tailwind—translating Figma into responsive layouts, tightening state boundaries in Redux, and shipping iteratively with Git-based reviews. Focused on readable components, predictable UX states, and handoff quality for backend integration.',
-      tags: ['React', 'Redux', 'Tailwind CSS', 'JavaScript'],
+        'Engineered responsive web applications optimized for desktop and mobile devices using ReactJS, JavaScript, HTML, CSS, and Tailwind CSS. Built interactive and reusable UI components improving consistency and maintainability. Designed data management workflows and contributed to e-commerce platform development. Collaborated with designers using Figma to convert high-fidelity designs into pixel-accurate functional web interfaces.',
+      tags: ['ReactJS', 'JavaScript', 'Tailwind CSS', 'Figma', 'REST APIs', 'E-commerce', 'Git'],
     },
     {
       period: 'Dec 2021 — May 2023',
       title: 'Project Engineer',
-      company: 'Wipro',
+      company: 'Wipro Ltd.',
+      location: 'Hyderabad, India',
       description:
-        'Delivered responsive web applications with HTML, CSS, JavaScript, Bootstrap, and React—emphasizing reusable components, cross-device layouts, and maintainable CSS architecture. Collaborated on sprint planning, defect triage, and incremental refactors so legacy screens stayed shippable while new experiences rolled out.',
-      tags: ['React', 'Bootstrap', 'JavaScript', 'HTML/CSS'],
+        'Developed dynamic and responsive user interfaces using HTML, CSS, JavaScript, and ReactJS across web applications. Engineered modular and reusable UI components to streamline development and maintain design consistency. Collaborated with cross-functional teams, designers, and backend developers in Agile development practices including stand-ups, sprint planning, and retrospectives.',
+      tags: ['ReactJS', 'JavaScript', 'HTML5', 'CSS3', 'Agile', 'Git'],
     },
   ] as const,
 
@@ -338,8 +380,8 @@ export const siteConfig = {
       {
         id: 'linkedin',
         title: 'LINKEDIN',
-        line: 'linkedin.com/in/mohit-kuril',
-        href: 'https://www.linkedin.com/in/mohit-kuril/',
+        line: 'linkedin.com/in/mohit-kuril-84884926b',
+        href: 'https://www.linkedin.com/in/mohit-kuril-84884926b',
         accent: 'blue' as const,
       },
       {
@@ -356,40 +398,41 @@ export const siteConfig = {
 
   readme: {
     headline: 'Mohit Kuril',
-    subline: 'Front-End Developer · Hyderabad, India',
+    subline: 'Software Engineer | Full Stack Developer · Hyderabad, India',
     /** Outline-style badges (accent = border / label tint) */
     badgeStack: [
       { label: 'React', accent: 'blue' as const },
-      { label: 'TypeScript', accent: 'blue' as const },
       { label: 'Next.js', accent: 'cyan' as const },
+      { label: 'TypeScript', accent: 'blue' as const },
+      { label: 'Python', accent: 'yellow' as const },
+      { label: 'FastAPI', accent: 'teal' as const },
       { label: 'Tailwind', accent: 'teal' as const },
-      { label: 'Redux', accent: 'violet' as const },
       { label: 'Mantine', accent: 'pink' as const },
     ] as const,
     /** Pill next to tech badges — downloads PDF from /public */
     showResumeButton: true as const,
     aboutTitle: '💜 About',
     aboutParagraphs: [
-      "Hi — Mohit here! I'm a front-end developer who enjoys turning fuzzy product ideas into crisp, responsive interfaces: readable layouts, intentional motion, and components that stay maintainable as the codebase grows. I spend most of my time in **React** and **TypeScript**—shipping dashboards, AI-assisted tools, and marketing-quality pages—while staying close to performance (lazy loading, sensible bundle splits) and collaboration with design and backend in Agile squads. Outside tickets, I like polishing UX details: empty states, keyboard paths, and small refactors that make the next feature cheaper to build. Glad you stopped by—cheers!",
+      `Hi — Mohit here! I'm a Software Engineer & Full Stack Developer with ${expYears} years of experience building dynamic, responsive, and scalable web applications. Strong frontend foundation in ReactJS, Next.js, TypeScript, JavaScript, Redux, Tailwind CSS, Mantine UI, and Micro Frontend architecture, with hands-on experience integrating REST APIs and developing backend services using Python and FastAPI. Experienced with SQL, PostgreSQL, MySQL, and MongoDB, Git, CI/CD workflows, performance optimization, and translating Figma designs into production-ready interfaces. Focused on clean code, maintainable architecture, and responsive UX.`,
     ] as const,
     highlights: [
-      { icon: '🔭', text: 'Building **high-performance UIs** at SignalX—Next.js, Mantine, and micro-frontend friendly delivery.' },
-      { icon: '⚡', text: '**React**, **Redux**, Tailwind, REST integrations, and Vite-based workflows.' },
-      { icon: '✨', text: 'Portfolio: **Chat with PDF**, dashboard, generators, weather, and Peteye—always learning, always shipping.' },
-      { icon: '📬', text: 'Open to roles and collaborations—reach out via **Contact** or the links below.' },
+      { icon: '🔭', text: 'Building **scalable UIs & backend services** at SignalX using Next.js, TypeScript, Mantine UI, Micro Frontends, Python, & FastAPI.' },
+      { icon: '⚡', text: 'Strong expertise in **ReactJS**, **Next.js**, **TypeScript**, **Redux**, Tailwind CSS, REST APIs, & SQL/MongoDB databases.' },
+      { icon: '✨', text: 'Portfolio highlights: **Integrate Leads**, **Rudransh & Co.**, **Chat with PDF**, **React Dashboard**, **Text-to-Image**, & **Peteye**.' },
+      { icon: '📬', text: 'Open to full-stack & frontend engineering roles—reach out via **Contact** or links below.' },
     ] as const,
     stackTitle: 'Stack',
     stackGroups: [
-      { title: 'Languages', items: ['JavaScript', 'TypeScript', 'HTML', 'CSS'] as const },
-      { title: 'Frontend', items: ['React', 'Next.js', 'Redux', 'Tailwind CSS', 'Mantine UI'] as const },
-      { title: 'Design & delivery', items: ['Figma', 'Responsive UI', 'Agile / Scrum', 'Git reviews'] as const },
-      { title: 'Tooling', items: ['Git', 'GitHub', 'npm', 'Vite', 'Vercel', 'Netlify'] as const },
+      { title: 'Languages', items: ['JavaScript', 'TypeScript', 'Python', 'HTML5', 'CSS3', 'SQL'] as const },
+      { title: 'Frontend', items: ['ReactJS', 'Next.js', 'Redux', 'Tailwind CSS', 'Mantine UI', 'Micro Frontends'] as const },
+      { title: 'Backend & Data', items: ['FastAPI', 'REST APIs', 'PostgreSQL', 'MySQL', 'MongoDB'] as const },
+      { title: 'Tooling & Engineering', items: ['Git', 'GitHub', 'CI/CD Workflows', 'Performance Optimization', 'Figma', 'Agile / Scrum'] as const },
     ] as const,
     connectTitle: 'Connect',
     connectLines: [
       { label: 'Email', value: 'mohitkuril5@gmail.com', href: 'mailto:mohitkuril5@gmail.com' },
+      { label: 'LinkedIn', value: 'mohit-kuril-84884926b', href: 'https://www.linkedin.com/in/mohit-kuril-84884926b' },
       { label: 'GitHub', value: 'Mohitkuril', href: 'https://github.com/Mohitkuril' },
-      { label: 'LinkedIn', value: 'mohit-kuril', href: 'https://www.linkedin.com/in/mohit-kuril/' },
       { label: 'Site', value: 'mohitkuril.xyz', href: 'https://mohitkuril.xyz/' },
     ] as const,
     footer: 'Made with 💜 by Mohit Kuril · 2026',
@@ -402,14 +445,14 @@ export const siteConfig = {
     explorerLine2: 'Copilot',
     greeting: "Hi! I'm Mohit's Copilot 👋",
     intro:
-      'Ask about projects (Chat with PDF, dashboard, generators), stack, or experience — I point you to the right file in this workspace.',
+      'Ask about full-stack projects, Python/FastAPI backend work, micro frontends, experience (SignalX, KR PETEYE, Wipro), or stack details.',
     prompts: [
       'Tell me about Mohit',
-      'What projects has Mohit shipped?',
-      'Summarize work experience',
-      "What's the tech stack?",
+      'What is Mohit\'s experience?',
+      'What projects has Mohit built?',
+      "What is Mohit\'s tech stack?",
       'How do I contact Mohit?',
-      'Where is the live portfolio?',
+      'Where can I download the resume?',
     ] as const,
     signInStatusLines: [
       'Copilot is signing in…',
