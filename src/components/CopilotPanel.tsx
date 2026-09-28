@@ -22,6 +22,100 @@ type Props = {
   compactComposer?: boolean
 }
 
+function renderTextWithBreaks(str: string): React.ReactNode {
+  const parts = str.split('\n')
+  return parts.map((p, i) => (
+    <span key={i}>
+      {i > 0 && <br />}
+      {p}
+    </span>
+  ))
+}
+
+function parseInlineMarkdown(text: string): React.ReactNode {
+  const clean = text.replace(/<br\s*\/?>/gi, '\n')
+  const parts = clean.split(/(\*\*.*?\*\*|`.*?`)/g)
+  return parts.map((part, idx) => {
+    if (part.startsWith('**') && part.endsWith('**')) {
+      return (
+        <strong key={idx} className="copilot2__hl">
+          {renderTextWithBreaks(part.slice(2, -2))}
+        </strong>
+      )
+    }
+    if (part.startsWith('`') && part.endsWith('`')) {
+      return (
+        <code key={idx} className="copilot2__inline-code">
+          {renderTextWithBreaks(part.slice(1, -1))}
+        </code>
+      )
+    }
+    return <span key={idx}>{renderTextWithBreaks(part)}</span>
+  })
+}
+
+function renderFormattedText(text: string) {
+  // Strip raw <br> tags and replace with line breaks so <br> never prints as literal text
+  const cleanText = text.replace(/<br\s*\/?>/gi, '\n')
+  const lines = cleanText.split('\n')
+  const elements: React.ReactNode[] = []
+  let listItems: React.ReactNode[] = []
+  let listKey = 0
+
+  const flushList = () => {
+    if (listItems.length > 0) {
+      elements.push(
+        <ul key={`ul-${listKey++}`} className="copilot2__msg-list">
+          {listItems}
+        </ul>,
+      )
+      listItems = []
+    }
+  }
+
+  lines.forEach((line, i) => {
+    const trimmed = line.trim()
+    if (!trimmed) {
+      flushList()
+      return
+    }
+
+    if (trimmed.startsWith('### ') || trimmed.startsWith('## ') || trimmed.startsWith('# ')) {
+      flushList()
+      const headerText = trimmed.replace(/^#+\s*/, '')
+      elements.push(
+        <h4 key={`h-${i}`} className="copilot2__msg-h4">
+          {parseInlineMarkdown(headerText)}
+        </h4>,
+      )
+      return
+    }
+
+    if (trimmed.startsWith('- ') || trimmed.startsWith('* ') || /^\d+\.\s/.test(trimmed)) {
+      const itemContent = trimmed.replace(/^(-\s*|\*\s*|\d+\.\s*)/, '')
+      listItems.push(
+        <li key={`li-${i}`} className="copilot2__msg-li">
+          <span className="copilot2__msg-bullet" aria-hidden>
+            •
+          </span>
+          <span>{parseInlineMarkdown(itemContent)}</span>
+        </li>,
+      )
+      return
+    }
+
+    flushList()
+    elements.push(
+      <p key={`p-${i}`} className="copilot2__msg-p">
+        {parseInlineMarkdown(trimmed)}
+      </p>,
+    )
+  })
+
+  flushList()
+  return elements
+}
+
 export function CopilotPanel({ activeTab, onClose, compactComposer }: Props) {
   const { copilot } = siteConfig
   const [messages, setMessages] = useState<Msg[]>([])
@@ -53,7 +147,15 @@ export function CopilotPanel({ activeTab, onClose, compactComposer }: Props) {
         const raw = await extractPdfText(buf)
         if (signal.aborted) return
         const clipped = raw.slice(0, 15_000)
-        const systemContent = `You are Mohit's portfolio Copilot. The text below was extracted from Mohit's résumé PDF. Answer questions using this résumé and general portfolio context. If something is not in the résumé, say you do not see it there. Keep answers concise and friendly.
+        const systemContent = `You are Mohit's portfolio Copilot. The text below was extracted from Mohit's résumé PDF.
+Answer questions accurately using this résumé and general portfolio context.
+
+Formatting Guidelines for your responses:
+- Format your response clearly using Markdown (headers like ### for key sections, **bold** for important skills/terms, and bullet points for lists).
+- Group information logically into short sections (e.g., Current Role, Work Experience, Technical Skills).
+- Do NOT output raw HTML tags like <br> or <br/>. Use standard markdown line breaks and bullet lists instead.
+- Keep paragraphs concise and easy to read. Avoid massive walls of plain text.
+- If something is not in the résumé, state clearly that you do not see it in Mohit's résumé.
 
 --- BEGIN RÉSUMÉ TEXT ---
 ${clipped}
@@ -219,7 +321,7 @@ The visitor is currently focused on the "${activeTab}" tab in a VS Code–style 
         {messages.map((m) => (
           <div key={m.id} className={`copilot2__msg copilot2__msg--${m.role}`}>
             <div className="copilot2__msg-body">
-              <p className="copilot2__msg-text">{m.text}</p>
+              <div className="copilot2__msg-text">{renderFormattedText(m.text)}</div>
               <time className="copilot2__msg-time" dateTime={new Date(m.at).toISOString()}>
                 {formatMsgTime(m.at)}
               </time>

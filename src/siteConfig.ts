@@ -210,7 +210,7 @@ export const siteConfig = {
       description:
         'A production-style document assistant: upload PDFs, extract text with PDF.js, and chat with the content through a split workspace—viewer on one side, streaming answers on the other. Sessions persist in IndexedDB so returning users can pick up where they left off, with drag-and-drop uploads and clear loading states for large files.',
       highlights: [
-        'Groq LLaMA 4 for low-latency Q&A over extracted text',
+        'Groq API (openai/gpt-oss-120b) for low-latency Q&A over extracted text',
         'IndexedDB-backed sessions and resilient client-only flows',
         'Split UI: synchronized scroll, citations-style context, and modal previews',
       ] as const,

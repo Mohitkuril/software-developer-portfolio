@@ -61,7 +61,7 @@
    - Business website for a CA firm offering GST, ITR, TDS, and audit services. Optimized for lead generation and local SEO in Hyderabad.
    - 🔗 [Live Demo](https://rudranshcompany.vercel.app/) | [GitHub Repo](https://github.com/Mohitkuril/Rudransh-website)
 
-3. **Chat With PDF** `React` `Tailwind CSS` `Groq LLaMA 4` `IndexedDB`
+3. **Chat With PDF** `React` `Tailwind CSS` `Groq API (openai/gpt-oss-120b)` `IndexedDB`
    - Document assistant with split UI workspace: upload PDFs, extract text client-side with PDF.js, and stream Q&A with Groq AI.
    - 🔗 [Live Demo](https://talktomypdf.vercel.app/) | [GitHub Repo](https://github.com/Mohitkuril/chatwithpdf)
 

@@ -5,14 +5,17 @@ export type GroqChatMessage = {
   content: string
 }
 
-const DEFAULT_MODEL = 'meta-llama/llama-4-scout-17b-16e-instruct'
+const DEFAULT_MODEL = 'openai/gpt-oss-120b'
 
 /** Shown for any Copilot / Groq / resume failure in the UI (no technical details). */
 export const COPILOT_LIMIT_MESSAGE = 'Copilot limit is reached.'
 
 export async function groqChat(messages: GroqChatMessage[]): Promise<string> {
   const API_KEY = import.meta.env.VITE_GROQ_API_KEY?.trim()
-  if (!API_KEY) return COPILOT_LIMIT_MESSAGE
+  if (!API_KEY) {
+    console.warn('VITE_GROQ_API_KEY is missing from environment variables (.env).')
+    return COPILOT_LIMIT_MESSAGE
+  }
 
   const endpoint = 'https://api.groq.com/openai/v1/chat/completions'
   const model = import.meta.env.VITE_GROQ_MODEL ?? DEFAULT_MODEL
